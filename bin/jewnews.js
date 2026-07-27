@@ -12,13 +12,15 @@ import { loadConfig, buildEuropeanFeeds, buildGlobalFeeds, dedupeFeeds, PROFILS 
 import { collect } from '../src/collect.js';
 import { Cache } from '../src/cache.js';
 import { FORMATS, renderEmail } from '../src/render/index.js';
+import { renderSourcesHtml } from '../src/render/sources.js';
 import { envoyerRevue, parseDestinataires } from '../src/mail.js';
 
 const AIDE = `
 jewnews — revue de presse hebdomadaire : Europe pays par pays, parutions mondiales.
 
   jewnews revue [options]        établit la revue et écrit les fichiers
-  jewnews sources [options]      liste les sources, ou les teste avec --check
+  jewnews sources [options]      liste les sources, les teste (--check)
+                                 ou en fait une page cliquable (--html)
   jewnews aide                   affiche cette aide
 
 PÉRIODE
@@ -81,6 +83,7 @@ EXEMPLES
   jewnews revue --semaine --email moi@exemple.fr --sans-fichiers
   jewnews revue --pays FR,DE,PL,HU --jours 14 --format md --stdout
   jewnews sources --check --pays IT
+  jewnews sources --html sources.html
 `;
 
 /** Analyse minimale de la ligne de commande : --clé valeur et --drapeau. */
@@ -265,6 +268,15 @@ async function commandeSources(options) {
     // --sans-google-news ne doit laisser que des flux d'éditeurs.
     ...buildGlobalFeeds(config, { days: jours, googleNews }),
   ]);
+
+  if (options.html) {
+    const contenu = renderSourcesHtml(feeds, { jours });
+    const fichier = typeof options.html === 'string' ? options.html : 'dist/sources.html';
+    await mkdir(path.dirname(path.resolve(fichier)), { recursive: true });
+    await writeFile(fichier, contenu, 'utf8');
+    process.stdout.write(`✓ ${fichier} — ${feeds.length} sources, toutes cliquables\n`);
+    return;
+  }
 
   if (!options.check) {
     for (const feed of feeds) {

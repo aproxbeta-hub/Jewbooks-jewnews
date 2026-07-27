@@ -167,7 +167,16 @@ jewnews revue --sans-google-news
 
 # Vérifier que les flux répondent encore
 jewnews sources --check
+
+# Une page où chaque source est cliquable, pour juger la couverture
+jewnews sources --html dist/sources.html
 ```
+
+`sources --html` engendre un tableau de bord autonome où **chaque source est
+un lien vivant**. Pour chaque pays et chaque requête, « Voir les résultats du
+jour » ouvre Google News dans la langue et l'édition du pays : ce sont les
+articles réels, en ce moment. C'est le moyen de juger la couverture — et de
+corriger un vocabulaire qui remonte du bruit — sans rien exécuter.
 
 Les fichiers sont écrits dans `dist/` sous le nom `revue-AAAA-MM-JJ.html`,
 `.md`, `.json`. Voir `jewnews aide` pour la liste complète des options.
@@ -187,6 +196,10 @@ Les fichiers sont écrits dans `dist/` sous le nom `revue-AAAA-MM-JJ.html`,
 | `--sans-fichiers` | n'écrire aucun fichier, se contenter d'envoyer |
 | `--calendrier` | ajoute le repère du calendrier hébraïque |
 | `--sans-cache` / `--vider-cache` | gestion du cache disque |
+
+Et pour la commande `sources` : `--check` teste les flux, `--html <fichier>`
+engendre le tableau de bord cliquable, `--pays` et `--sans-google-news`
+restreignent le périmètre comme pour `revue`.
 
 ## Ce qui se passe entre la collecte et la page
 
@@ -267,7 +280,7 @@ langue déclarée et que chaque langue fournit les quatre groupes.
 npm test
 ```
 
-114 tests, sans accès réseau : le réseau est simulé par des fixtures, y compris
+126 tests, sans accès réseau : le réseau est simulé par des fixtures, y compris
 pour la génération de bout en bout d'une revue complète et pour l'expédition du
 message (transport en mémoire).
 

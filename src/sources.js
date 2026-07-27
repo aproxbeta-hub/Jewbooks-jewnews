@@ -29,6 +29,15 @@ export async function loadConfig({ dir = SOURCES_DIR } = {}) {
   return { langues: langues.langues, pays: europe.pays, monde };
 }
 
+/** Racine du site d'un flux, faute d'URL déclarée. */
+function racineDuSite(url) {
+  try {
+    return new URL(url).origin;
+  } catch {
+    return null;
+  }
+}
+
 /** Met un terme entre guillemets s'il contient une espace. */
 const quote = (term) => (/\s/.test(term) ? `"${term}"` : term);
 
@@ -46,6 +55,16 @@ export function buildQuery(groupA, groupB, days) {
 export function googleNewsUrl(query, { hl, gl, ceid }) {
   const params = new URLSearchParams({ q: query, hl, gl, ceid });
   return `https://news.google.com/rss/search?${params.toString()}`;
+}
+
+/**
+ * Même requête, mais dans l'interface Google News plutôt qu'en RSS.
+ * C'est ce lien qu'on met sous les yeux d'un humain : il ouvre les résultats
+ * réels du jour, ce qui permet de juger une requête sans rien exécuter.
+ */
+export function googleNewsSearchUrl(query, { hl, gl, ceid }) {
+  const params = new URLSearchParams({ q: query, hl, gl, ceid });
+  return `https://news.google.com/search?${params.toString()}`;
 }
 
 /** Profils de requête disponibles pour la veille pays. */
@@ -115,6 +134,12 @@ export function buildEuropeanFeeds(config, options = {}) {
             id: `gn-${pays.code.toLowerCase()}-${edition.langue}-${profil}`,
             nom: `${pays.nom} — presse ${vocab.nom} (${spec.label})`,
             url: googleNewsUrl(query, edition),
+            // Conservés pour le tableau de bord des sources : ils permettent
+            // de rejouer la requête à la main, dans l'interface Google News.
+            requete: query,
+            recherche: googleNewsSearchUrl(query, edition),
+            termes: groupB?.length ? [...groupA, ...groupB] : [...groupA],
+            edition,
             langue: edition.langue,
             poids: pays.poids ?? 1.5,
             origine: 'google-news',
@@ -133,6 +158,7 @@ export function buildEuropeanFeeds(config, options = {}) {
           id: media.id,
           nom: media.nom,
           url: media.url,
+          site: media.site || racineDuSite(media.url),
           langue: media.langue,
           poids: media.poids ?? pays.poids ?? 1.5,
           origine: 'media',
@@ -159,6 +185,7 @@ export function buildGlobalFeeds(config, options = {}) {
         id: source.id,
         nom: source.nom,
         url: source.url,
+        site: source.site || racineDuSite(source.url),
         langue: source.langue,
         poids: source.poids ?? 1.5,
         origine: 'monde',
@@ -173,10 +200,15 @@ export function buildGlobalFeeds(config, options = {}) {
     for (const edition of config.monde.requetesLivres || []) {
       const vocab = config.langues[edition.langue];
       if (!vocab) continue;
+      const query = buildQuery(vocab.noyau, vocab.livres, days);
       feeds.push({
         id: `gn-livres-${edition.ceid.replace(':', '-').toLowerCase()}`,
         nom: `Parutions — presse ${vocab.nom} (${edition.gl})`,
-        url: googleNewsUrl(buildQuery(vocab.noyau, vocab.livres, days), edition),
+        url: googleNewsUrl(query, edition),
+        requete: query,
+        recherche: googleNewsSearchUrl(query, edition),
+        termes: [...vocab.noyau, ...vocab.livres],
+        edition,
         langue: edition.langue,
         poids: 1.5,
         origine: 'google-news',
