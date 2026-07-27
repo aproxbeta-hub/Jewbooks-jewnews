@@ -1,0 +1,39 @@
+{
+  "name": "jewnews",
+  "version": "1.0.0",
+  "description": "Générateur d'hebdomadaire d'actualité juive : agrégation de flux RSS, dédoublonnage, rubriques et digest (HTML / Markdown / JSON) avec en-tête du calendrier hébraïque.",
+  "type": "module",
+  "bin": {
+    "jewnews": "bin/jewnews.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin",
+    "src",
+    "sources.json"
+  ],
+  "scripts": {
+    "test": "node --test test/",
+    "build": "node bin/jewnews.js build",
+    "check-sources": "node bin/jewnews.js sources --check"
+  },
+  "keywords": [
+    "rss",
+    "newsletter",
+    "digest",
+    "jewish",
+    "news",
+    "hebcal",
+    "actualite-juive"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@hebcal/core": "^6.8.2",
+    "@hebcal/locales": "^6.8.2"
+  }
+}

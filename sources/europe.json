@@ -1,0 +1,266 @@
+{
+  "_lisez_moi": [
+    "Un objet par pays du continent européen.",
+    "",
+    "  editions   : une par langue de veille. `hl`/`gl`/`ceid` sont les paramètres",
+    "               Google News qui déterminent l'édition interrogée, donc la",
+    "               presse locale et nationale remontée.",
+    "  medias     : flux des médias communautaires du pays, quand ils existent.",
+    "               Ils sont récupérés en plus des requêtes, jamais à la place.",
+    "  poids      : 0 à 3, pondère le classement final.",
+    "  actif      : false = ignoré, sauf --pays explicite.",
+    "",
+    "Les URLs de médias sont données de bonne foi mais changent souvent :",
+    "lancez `jewnews sources --check` avant la première édition."
+  ],
+  "pays": [
+    {
+      "code": "FR", "nom": "France", "region": "Europe de l'Ouest", "poids": 3,
+      "editions": [{ "langue": "fr", "hl": "fr", "gl": "FR", "ceid": "FR:fr" }],
+      "medias": [
+        { "id": "fr-k", "nom": "K. Les Juifs, l'Europe, le XXIe siècle", "url": "https://k-larevue.com/feed/", "langue": "fr", "poids": 3 },
+        { "id": "fr-tribune", "nom": "Tribune Juive", "url": "https://www.tribunejuive.info/feed/", "langue": "fr", "poids": 2 },
+        { "id": "fr-jforum", "nom": "JForum", "url": "https://www.jforum.fr/feed", "langue": "fr", "poids": 1.5 },
+        { "id": "fr-alliance", "nom": "Alliance", "url": "https://www.alliancefr.com/feed", "langue": "fr", "poids": 1.5 },
+        { "id": "fr-crif", "nom": "CRIF", "url": "https://www.crif.org/fr/rss.xml", "langue": "fr", "poids": 2 },
+        { "id": "fr-lmj", "nom": "Le Monde Juif .info", "url": "https://lemondejuif.info/feed/", "langue": "fr", "poids": 1.5 },
+        { "id": "fr-akadem", "nom": "Akadem", "url": "https://akadem.org/rss/", "langue": "fr", "poids": 1.5, "actif": false }
+      ]
+    },
+    {
+      "code": "DE", "nom": "Allemagne", "region": "Europe centrale", "poids": 3,
+      "editions": [{ "langue": "de", "hl": "de", "gl": "DE", "ceid": "DE:de" }],
+      "medias": [
+        { "id": "de-juedische-allgemeine", "nom": "Jüdische Allgemeine", "url": "https://www.juedische-allgemeine.de/feed/", "langue": "de", "poids": 3 },
+        { "id": "de-belltower", "nom": "Belltower.News", "url": "https://www.belltower.news/feed/", "langue": "de", "poids": 1.5 },
+        { "id": "de-juedisches-museum-berlin", "nom": "Jüdisches Museum Berlin", "url": "https://www.jmberlin.de/blog/feed", "langue": "de", "poids": 1.5, "type": "evenement" }
+      ]
+    },
+    {
+      "code": "GB", "nom": "Royaume-Uni", "region": "Îles Britanniques", "poids": 3,
+      "editions": [{ "langue": "en", "hl": "en-GB", "gl": "GB", "ceid": "GB:en" }],
+      "medias": [
+        { "id": "gb-jc", "nom": "The Jewish Chronicle", "url": "https://www.thejc.com/feed", "langue": "en", "poids": 2.5 },
+        { "id": "gb-jewishnews", "nom": "Jewish News (UK)", "url": "https://www.jewishnews.co.uk/feed/", "langue": "en", "poids": 2 },
+        { "id": "gb-wiener", "nom": "Wiener Holocaust Library", "url": "https://wienerholocaustlibrary.org/feed/", "langue": "en", "poids": 1.5, "type": "evenement" }
+      ]
+    },
+    {
+      "code": "IT", "nom": "Italie", "region": "Europe du Sud", "poids": 2.5,
+      "editions": [{ "langue": "it", "hl": "it", "gl": "IT", "ceid": "IT:it" }],
+      "medias": [
+        { "id": "it-moked", "nom": "Pagine Ebraiche / Moked", "url": "https://moked.it/blog/feed/", "langue": "it", "poids": 2.5 },
+        { "id": "it-shalom", "nom": "Shalom (Rome)", "url": "https://www.shalom.it/feed", "langue": "it", "poids": 2 }
+      ]
+    },
+    {
+      "code": "PL", "nom": "Pologne", "region": "Europe centrale", "poids": 2.5,
+      "editions": [{ "langue": "pl", "hl": "pl", "gl": "PL", "ceid": "PL:pl" }],
+      "medias": [
+        { "id": "pl-chidusz", "nom": "Chidusz", "url": "https://chidusz.com/feed/", "langue": "pl", "poids": 2 },
+        { "id": "pl-polin", "nom": "Musée POLIN", "url": "https://polin.pl/pl/rss.xml", "langue": "pl", "poids": 1.5, "type": "evenement" }
+      ]
+    },
+    {
+      "code": "HU", "nom": "Hongrie", "region": "Europe centrale", "poids": 2.5,
+      "editions": [{ "langue": "hu", "hl": "hu", "gl": "HU", "ceid": "HU:hu" }],
+      "medias": [
+        { "id": "hu-szombat", "nom": "Szombat", "url": "https://www.szombat.org/feed", "langue": "hu", "poids": 2.5 }
+      ]
+    },
+    {
+      "code": "NL", "nom": "Pays-Bas", "region": "Europe de l'Ouest", "poids": 2.5,
+      "editions": [{ "langue": "nl", "hl": "nl", "gl": "NL", "ceid": "NL:nl" }],
+      "medias": [
+        { "id": "nl-niw", "nom": "Nieuw Israëlietisch Weekblad", "url": "https://niw.nl/feed/", "langue": "nl", "poids": 2.5 },
+        { "id": "nl-jonet", "nom": "Jonet", "url": "https://jonet.nl/feed/", "langue": "nl", "poids": 1.5 }
+      ]
+    },
+    {
+      "code": "BE", "nom": "Belgique", "region": "Europe de l'Ouest", "poids": 2.5,
+      "editions": [
+        { "langue": "fr", "hl": "fr", "gl": "BE", "ceid": "BE:fr" },
+        { "langue": "nl", "hl": "nl", "gl": "BE", "ceid": "BE:nl" }
+      ],
+      "medias": [
+        { "id": "be-joodsactueel", "nom": "Joods Actueel", "url": "https://joodsactueel.be/feed/", "langue": "nl", "poids": 2.5 }
+      ]
+    },
+    {
+      "code": "CH", "nom": "Suisse", "region": "Europe de l'Ouest", "poids": 2,
+      "editions": [
+        { "langue": "de", "hl": "de", "gl": "CH", "ceid": "CH:de" },
+        { "langue": "fr", "hl": "fr", "gl": "CH", "ceid": "CH:fr" }
+      ],
+      "medias": [
+        { "id": "ch-tachles", "nom": "tachles", "url": "https://www.tachles.ch/rss.xml", "langue": "de", "poids": 2, "actif": false }
+      ]
+    },
+    {
+      "code": "AT", "nom": "Autriche", "region": "Europe centrale", "poids": 2,
+      "editions": [{ "langue": "de", "hl": "de", "gl": "AT", "ceid": "AT:de" }],
+      "medias": []
+    },
+    {
+      "code": "ES", "nom": "Espagne", "region": "Europe du Sud", "poids": 2,
+      "editions": [{ "langue": "es", "hl": "es", "gl": "ES", "ceid": "ES:es" }],
+      "medias": []
+    },
+    {
+      "code": "PT", "nom": "Portugal", "region": "Europe du Sud", "poids": 1.5,
+      "editions": [{ "langue": "pt", "hl": "pt-PT", "gl": "PT", "ceid": "PT:pt-150" }],
+      "medias": []
+    },
+    {
+      "code": "GR", "nom": "Grèce", "region": "Europe du Sud", "poids": 2,
+      "editions": [{ "langue": "el", "hl": "el", "gl": "GR", "ceid": "GR:el" }],
+      "medias": [
+        { "id": "gr-kis", "nom": "Conseil central des communautés juives de Grèce", "url": "https://kis.gr/feed/", "langue": "el", "poids": 2 }
+      ]
+    },
+    {
+      "code": "TR", "nom": "Turquie", "region": "Europe du Sud-Est", "poids": 2,
+      "editions": [{ "langue": "tr", "hl": "tr", "gl": "TR", "ceid": "TR:tr" }],
+      "medias": [
+        { "id": "tr-salom", "nom": "Şalom", "url": "https://www.salom.com.tr/rss", "langue": "tr", "poids": 2.5 }
+      ]
+    },
+    {
+      "code": "UA", "nom": "Ukraine", "region": "Europe de l'Est", "poids": 2.5,
+      "editions": [{ "langue": "uk", "hl": "uk", "gl": "UA", "ceid": "UA:uk" }],
+      "medias": []
+    },
+    {
+      "code": "RU", "nom": "Russie", "region": "Europe de l'Est", "poids": 2,
+      "editions": [{ "langue": "ru", "hl": "ru", "gl": "RU", "ceid": "RU:ru" }],
+      "medias": [
+        { "id": "ru-lechaim", "nom": "Lechaim", "url": "https://lechaim.ru/feed/", "langue": "ru", "poids": 1.5 }
+      ]
+    },
+    {
+      "code": "CZ", "nom": "République tchèque", "region": "Europe centrale", "poids": 2,
+      "editions": [{ "langue": "cs", "hl": "cs", "gl": "CZ", "ceid": "CZ:cs" }],
+      "medias": []
+    },
+    {
+      "code": "SK", "nom": "Slovaquie", "region": "Europe centrale", "poids": 1.5,
+      "editions": [{ "langue": "sk", "hl": "sk", "gl": "SK", "ceid": "SK:sk" }],
+      "medias": []
+    },
+    {
+      "code": "RO", "nom": "Roumanie", "region": "Europe de l'Est", "poids": 2,
+      "editions": [{ "langue": "ro", "hl": "ro", "gl": "RO", "ceid": "RO:ro" }],
+      "medias": []
+    },
+    {
+      "code": "BG", "nom": "Bulgarie", "region": "Europe du Sud-Est", "poids": 1.5,
+      "editions": [{ "langue": "bg", "hl": "bg", "gl": "BG", "ceid": "BG:bg" }],
+      "medias": []
+    },
+    {
+      "code": "MD", "nom": "Moldavie", "region": "Europe de l'Est", "poids": 1.5,
+      "editions": [{ "langue": "ro", "hl": "ro", "gl": "MD", "ceid": "MD:ro" }],
+      "medias": []
+    },
+    {
+      "code": "SE", "nom": "Suède", "region": "Europe du Nord", "poids": 2,
+      "editions": [{ "langue": "sv", "hl": "sv", "gl": "SE", "ceid": "SE:sv" }],
+      "medias": []
+    },
+    {
+      "code": "NO", "nom": "Norvège", "region": "Europe du Nord", "poids": 1.5,
+      "editions": [{ "langue": "no", "hl": "no", "gl": "NO", "ceid": "NO:no" }],
+      "medias": []
+    },
+    {
+      "code": "DK", "nom": "Danemark", "region": "Europe du Nord", "poids": 1.5,
+      "editions": [{ "langue": "da", "hl": "da", "gl": "DK", "ceid": "DK:da" }],
+      "medias": []
+    },
+    {
+      "code": "FI", "nom": "Finlande", "region": "Europe du Nord", "poids": 1.5,
+      "editions": [{ "langue": "fi", "hl": "fi", "gl": "FI", "ceid": "FI:fi" }],
+      "medias": []
+    },
+    {
+      "code": "IS", "nom": "Islande", "region": "Europe du Nord", "poids": 1,
+      "editions": [{ "langue": "is", "hl": "is", "gl": "IS", "ceid": "IS:is" }],
+      "medias": []
+    },
+    {
+      "code": "IE", "nom": "Irlande", "region": "Îles Britanniques", "poids": 1.5,
+      "editions": [{ "langue": "en", "hl": "en-IE", "gl": "IE", "ceid": "IE:en" }],
+      "medias": []
+    },
+    {
+      "code": "LT", "nom": "Lituanie", "region": "Pays baltes", "poids": 2,
+      "editions": [{ "langue": "lt", "hl": "lt", "gl": "LT", "ceid": "LT:lt" }],
+      "medias": []
+    },
+    {
+      "code": "LV", "nom": "Lettonie", "region": "Pays baltes", "poids": 1.5,
+      "editions": [{ "langue": "lv", "hl": "lv", "gl": "LV", "ceid": "LV:lv" }],
+      "medias": []
+    },
+    {
+      "code": "EE", "nom": "Estonie", "region": "Pays baltes", "poids": 1.5,
+      "editions": [{ "langue": "et", "hl": "et", "gl": "EE", "ceid": "EE:et" }],
+      "medias": []
+    },
+    {
+      "code": "HR", "nom": "Croatie", "region": "Balkans", "poids": 1.5,
+      "editions": [{ "langue": "hr", "hl": "hr", "gl": "HR", "ceid": "HR:hr" }],
+      "medias": []
+    },
+    {
+      "code": "RS", "nom": "Serbie", "region": "Balkans", "poids": 1.5,
+      "editions": [{ "langue": "sr", "hl": "sr", "gl": "RS", "ceid": "RS:sr" }],
+      "medias": []
+    },
+    {
+      "code": "BA", "nom": "Bosnie-Herzégovine", "region": "Balkans", "poids": 1.5,
+      "editions": [{ "langue": "bs", "hl": "bs", "gl": "BA", "ceid": "BA:bs" }],
+      "medias": []
+    },
+    {
+      "code": "SI", "nom": "Slovénie", "region": "Balkans", "poids": 1,
+      "editions": [{ "langue": "sl", "hl": "sl", "gl": "SI", "ceid": "SI:sl" }],
+      "medias": []
+    },
+    {
+      "code": "MK", "nom": "Macédoine du Nord", "region": "Balkans", "poids": 1,
+      "editions": [{ "langue": "mk", "hl": "mk", "gl": "MK", "ceid": "MK:mk" }],
+      "medias": []
+    },
+    {
+      "code": "ME", "nom": "Monténégro", "region": "Balkans", "poids": 1,
+      "editions": [{ "langue": "sr", "hl": "sr", "gl": "ME", "ceid": "ME:sr" }],
+      "medias": []
+    },
+    {
+      "code": "AL", "nom": "Albanie", "region": "Balkans", "poids": 1,
+      "editions": [{ "langue": "sq", "hl": "sq", "gl": "AL", "ceid": "AL:sq" }],
+      "medias": []
+    },
+    {
+      "code": "LU", "nom": "Luxembourg", "region": "Europe de l'Ouest", "poids": 1,
+      "editions": [{ "langue": "fr", "hl": "fr", "gl": "LU", "ceid": "LU:fr" }],
+      "medias": []
+    },
+    {
+      "code": "MT", "nom": "Malte", "region": "Europe du Sud", "poids": 1,
+      "editions": [{ "langue": "en", "hl": "en", "gl": "MT", "ceid": "MT:en" }],
+      "medias": []
+    },
+    {
+      "code": "CY", "nom": "Chypre", "region": "Europe du Sud", "poids": 1,
+      "editions": [{ "langue": "el", "hl": "el", "gl": "CY", "ceid": "CY:el" }],
+      "medias": []
+    },
+    {
+      "code": "BY", "nom": "Biélorussie", "region": "Europe de l'Est", "poids": 1,
+      "editions": [{ "langue": "ru", "hl": "ru", "gl": "BY", "ceid": "BY:ru" }],
+      "medias": []
+    }
+  ]
+}

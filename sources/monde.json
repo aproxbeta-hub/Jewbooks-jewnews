@@ -1,0 +1,57 @@
+{
+  "_lisez_moi": [
+    "Sources mondiales, hors découpage par pays : parutions de livres, podcasts",
+    "et événements. Contrairement à la veille presse, elles ne sont pas limitées",
+    "à l'Europe — une parution à New York, Tel-Aviv ou Buenos Aires intéresse",
+    "autant la rédaction.",
+    "",
+    "`type` force la rubrique de destination : livre, podcast, evenement.",
+    "Sans `type`, la classification automatique décide."
+  ],
+  "livres": [
+    { "id": "jbc", "nom": "Jewish Book Council", "url": "https://www.jewishbookcouncil.org/rss.xml", "langue": "en", "poids": 3, "type": "livre" },
+    { "id": "jrb", "nom": "Jewish Review of Books", "url": "https://jewishreviewofbooks.com/feed/", "langue": "en", "poids": 3, "type": "livre" },
+    { "id": "tablet", "nom": "Tablet Magazine", "url": "https://www.tabletmag.com/feeds/latest.rss", "langue": "en", "poids": 2 },
+    { "id": "mosaic", "nom": "Mosaic Magazine", "url": "https://mosaicmagazine.com/feed/", "langue": "en", "poids": 2 },
+    { "id": "forward-culture", "nom": "The Forward — Culture", "url": "https://forward.com/culture/feed/", "langue": "en", "poids": 2 },
+    { "id": "yiddish-book-center", "nom": "Yiddish Book Center", "url": "https://www.yiddishbookcenter.org/rss.xml", "langue": "en", "poids": 2 },
+    { "id": "in-geveb", "nom": "In geveb (études yiddish)", "url": "https://ingeveb.org/feed.xml", "langue": "en", "poids": 2, "type": "livre" },
+    { "id": "jta-culture", "nom": "JTA", "url": "https://www.jta.org/feed", "langue": "en", "poids": 2 },
+    { "id": "lrb", "nom": "London Review of Books", "url": "https://www.lrb.co.uk/feeds/rss", "langue": "en", "poids": 1.5, "actif": false },
+    { "id": "sdlt", "nom": "Sciences et Lettres — parutions judaïsme", "url": "https://www.fabula.org/rss/parutions.php", "langue": "fr", "poids": 1.5, "actif": false }
+  ],
+  "podcasts": [
+    { "id": "unorthodox", "nom": "Unorthodox (Tablet)", "url": "https://feeds.megaphone.fm/unorthodox", "langue": "en", "poids": 2, "type": "podcast" },
+    { "id": "israel-story", "nom": "Israel Story", "url": "https://feeds.simplecast.com/israelstory", "langue": "en", "poids": 2, "type": "podcast" },
+    { "id": "jewish-currents", "nom": "On the Nose (Jewish Currents)", "url": "https://feeds.acast.com/public/shows/on-the-nose", "langue": "en", "poids": 2, "type": "podcast" },
+    { "id": "identity-crisis", "nom": "Identity/Crisis (Shalom Hartman)", "url": "https://feeds.simplecast.com/6vwG1SlZ", "langue": "en", "poids": 1.5, "type": "podcast" },
+    { "id": "akadem-podcast", "nom": "Akadem — le campus numérique juif", "url": "https://akadem.org/rss/podcast/", "langue": "fr", "poids": 2, "type": "podcast", "actif": false }
+  ],
+  "evenements": [
+    { "id": "mahj", "nom": "Musée d'art et d'histoire du Judaïsme", "url": "https://www.mahj.org/fr/rss.xml", "langue": "fr", "poids": 2.5, "type": "evenement" },
+    { "id": "memorial-shoah", "nom": "Mémorial de la Shoah", "url": "https://www.memorialdelashoah.org/feed", "langue": "fr", "poids": 2.5, "type": "evenement", "actif": false },
+    { "id": "jm-london", "nom": "Jewish Museum London", "url": "https://jewishmuseum.org.uk/feed/", "langue": "en", "poids": 1.5, "type": "evenement", "actif": false },
+    { "id": "cjs-oxford", "nom": "Oxford Centre for Hebrew and Jewish Studies", "url": "https://www.ochjs.ac.uk/feed/", "langue": "en", "poids": 1.5, "type": "evenement", "actif": false }
+  ],
+  "requetesLivres": [
+    { "langue": "fr", "hl": "fr", "gl": "FR", "ceid": "FR:fr" },
+    { "langue": "en", "hl": "en-US", "gl": "US", "ceid": "US:en" },
+    { "langue": "en", "hl": "en-GB", "gl": "GB", "ceid": "GB:en" },
+    { "langue": "de", "hl": "de", "gl": "DE", "ceid": "DE:de" },
+    { "langue": "it", "hl": "it", "gl": "IT", "ceid": "IT:it" },
+    { "langue": "es", "hl": "es", "gl": "ES", "ceid": "ES:es" }
+  ],
+  "googleBooks": {
+    "actif": true,
+    "requetes": [
+      "subject:\"Jewish\"",
+      "subject:\"Judaism\"",
+      "subject:\"Holocaust\"",
+      "subject:\"Jews\" subject:\"History\"",
+      "subject:\"Yiddish\"",
+      "subject:\"Antisemitism\""
+    ],
+    "langues": ["fr", "en", "de", "it", "es"],
+    "maxParRequete": 40
+  }
+}

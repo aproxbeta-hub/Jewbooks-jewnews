@@ -1,0 +1,1700 @@
+{
+  "_lisez_moi": [
+    "Vocabulaire de veille, par langue. Il sert à deux choses :",
+    "  1. construire les requêtes Google News pays par pays (groupes `noyau`,",
+    "     `antisemitisme`, `culture`, `livres`, en mots pleins) ;",
+    "  2. mesurer la pertinence juive d'un article (groupe `racines`).",
+    "",
+    "`racines` est distinct à dessein : polonais, hongrois, letton ou finnois",
+    "déclinent et suffixent lourdement, si bien qu'un mot plein comme « Żydzi »",
+    "ne reconnaît pas « Żydach ». Les racines sont donc comparées par préfixe,",
+    "sans accents ni casse, avec un maximum de six lettres de suffixe.",
+    "Écrivez-les sans diacritiques : la comparaison les ignore de toute façon.",
+    "",
+    "Un terme contenant une espace est automatiquement mis entre guillemets dans",
+    "la requête (expression exacte). Le fichier est relu à chaque exécution."
+  ],
+  "langues": {
+    "fr": {
+      "nom": "français",
+      "racines": {
+        "noyau": [
+          "juif",
+          "juive",
+          "judai",
+          "judeo",
+          "synagog",
+          "rabbin",
+          "casher",
+          "kacher",
+          "yiddish",
+          "hebra",
+          "sefarad",
+          "ashkenaz",
+          "talmud",
+          "kippa"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "shoah",
+          "holocaust",
+          "negationn",
+          "judeophob"
+        ]
+      },
+      "noyau": [
+        "juif",
+        "juive",
+        "juifs",
+        "judaïsme",
+        "communauté juive",
+        "synagogue",
+        "rabbin",
+        "casher",
+        "yiddish",
+        "hébreu",
+        "séfarade",
+        "ashkénaze"
+      ],
+      "antisemitisme": [
+        "antisémitisme",
+        "antisémite",
+        "acte antisémite",
+        "profanation",
+        "négationnisme",
+        "Shoah",
+        "Holocauste"
+      ],
+      "culture": [
+        "exposition",
+        "festival",
+        "colloque",
+        "conférence",
+        "documentaire",
+        "podcast",
+        "mémorial",
+        "musée"
+      ],
+      "livres": [
+        "livre",
+        "roman",
+        "essai",
+        "parution",
+        "récit",
+        "biographie",
+        "traduction",
+        "éditions"
+      ]
+    },
+    "en": {
+      "nom": "anglais",
+      "racines": {
+        "noyau": [
+          "jewish",
+          "jewry",
+          "judaism",
+          "judaic",
+          "synagog",
+          "kosher",
+          "yiddish",
+          "hebrew",
+          "sephard",
+          "ashkenaz",
+          "talmud",
+          "kippah",
+          "yeshiva"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "anti-semit",
+          "holocaust",
+          "shoah"
+        ]
+      },
+      "noyau": [
+        "Jewish",
+        "Jews",
+        "Judaism",
+        "Jewish community",
+        "synagogue",
+        "rabbi",
+        "kosher",
+        "Yiddish",
+        "Hebrew",
+        "Sephardi",
+        "Ashkenazi"
+      ],
+      "antisemitisme": [
+        "antisemitism",
+        "antisemitic",
+        "anti-Semitism",
+        "Holocaust",
+        "Shoah",
+        "Holocaust denial",
+        "desecration"
+      ],
+      "culture": [
+        "exhibition",
+        "festival",
+        "conference",
+        "documentary",
+        "podcast",
+        "memorial",
+        "museum",
+        "lecture"
+      ],
+      "livres": [
+        "book",
+        "novel",
+        "memoir",
+        "essay",
+        "biography",
+        "published",
+        "translation",
+        "press"
+      ]
+    },
+    "de": {
+      "nom": "allemand",
+      "racines": {
+        "noyau": [
+          "judisch",
+          "juden",
+          "judentum",
+          "synagog",
+          "rabbin",
+          "koscher",
+          "jiddisch",
+          "hebra",
+          "sephard",
+          "aschkenas",
+          "talmud"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "schoah",
+          "holocaust",
+          "judenhass",
+          "judenfeind"
+        ]
+      },
+      "noyau": [
+        "jüdisch",
+        "Juden",
+        "Judentum",
+        "jüdische Gemeinde",
+        "Synagoge",
+        "Rabbiner",
+        "koscher",
+        "Jiddisch",
+        "sephardisch",
+        "aschkenasisch"
+      ],
+      "antisemitisme": [
+        "Antisemitismus",
+        "antisemitisch",
+        "Schoah",
+        "Holocaust",
+        "Holocaustleugnung",
+        "Schändung"
+      ],
+      "culture": [
+        "Ausstellung",
+        "Festival",
+        "Tagung",
+        "Dokumentarfilm",
+        "Podcast",
+        "Gedenkstätte",
+        "Museum",
+        "Vortrag"
+      ],
+      "livres": [
+        "Buch",
+        "Roman",
+        "Essay",
+        "Erscheint",
+        "Biografie",
+        "Übersetzung",
+        "Verlag",
+        "Sachbuch"
+      ]
+    },
+    "nl": {
+      "nom": "néerlandais",
+      "racines": {
+        "noyau": [
+          "joods",
+          "joden",
+          "jodendom",
+          "synagog",
+          "rabbijn",
+          "koosjer",
+          "jiddisch",
+          "sefard",
+          "asjkenaz"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "sjoa",
+          "holocaust",
+          "jodenhaat"
+        ]
+      },
+      "noyau": [
+        "joods",
+        "Joden",
+        "jodendom",
+        "joodse gemeenschap",
+        "synagoge",
+        "rabbijn",
+        "koosjer",
+        "Jiddisch",
+        "Sefardisch"
+      ],
+      "antisemitisme": [
+        "antisemitisme",
+        "antisemitisch",
+        "Sjoa",
+        "Holocaust",
+        "Holocaustontkenning",
+        "vernieling"
+      ],
+      "culture": [
+        "tentoonstelling",
+        "festival",
+        "congres",
+        "documentaire",
+        "podcast",
+        "monument",
+        "museum",
+        "lezing"
+      ],
+      "livres": [
+        "boek",
+        "roman",
+        "essay",
+        "verschijnt",
+        "biografie",
+        "vertaling",
+        "uitgeverij"
+      ]
+    },
+    "it": {
+      "nom": "italien",
+      "racines": {
+        "noyau": [
+          "ebraic",
+          "ebrei",
+          "ebrea",
+          "ebraism",
+          "sinagog",
+          "rabbin",
+          "kasher",
+          "yiddish",
+          "sefardit",
+          "ashkenazit"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "shoah",
+          "olocaust",
+          "negazionis"
+        ]
+      },
+      "noyau": [
+        "ebraico",
+        "ebrei",
+        "ebraismo",
+        "comunità ebraica",
+        "sinagoga",
+        "rabbino",
+        "kasher",
+        "yiddish",
+        "sefardita",
+        "ashkenazita"
+      ],
+      "antisemitisme": [
+        "antisemitismo",
+        "antisemita",
+        "Shoah",
+        "Olocausto",
+        "negazionismo",
+        "profanazione"
+      ],
+      "culture": [
+        "mostra",
+        "festival",
+        "convegno",
+        "documentario",
+        "podcast",
+        "memoriale",
+        "museo",
+        "conferenza"
+      ],
+      "livres": [
+        "libro",
+        "romanzo",
+        "saggio",
+        "uscita",
+        "biografia",
+        "traduzione",
+        "editore"
+      ]
+    },
+    "es": {
+      "nom": "espagnol",
+      "racines": {
+        "noyau": [
+          "judio",
+          "judia",
+          "judaism",
+          "judaic",
+          "sinagog",
+          "rabin",
+          "kosher",
+          "sefard",
+          "asquenaz"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holocaust",
+          "shoa",
+          "negacionis"
+        ]
+      },
+      "noyau": [
+        "judío",
+        "judíos",
+        "judaísmo",
+        "comunidad judía",
+        "sinagoga",
+        "rabino",
+        "kosher",
+        "yidis",
+        "sefardí",
+        "asquenazí"
+      ],
+      "antisemitisme": [
+        "antisemitismo",
+        "antisemita",
+        "Holocausto",
+        "Shoá",
+        "negacionismo",
+        "profanación"
+      ],
+      "culture": [
+        "exposición",
+        "festival",
+        "congreso",
+        "documental",
+        "podcast",
+        "memorial",
+        "museo",
+        "conferencia"
+      ],
+      "livres": [
+        "libro",
+        "novela",
+        "ensayo",
+        "publicación",
+        "biografía",
+        "traducción",
+        "editorial"
+      ]
+    },
+    "pt": {
+      "nom": "portugais",
+      "racines": {
+        "noyau": [
+          "judeu",
+          "judai",
+          "judaic",
+          "judia",
+          "sinagog",
+          "rabino",
+          "sefardit",
+          "asquenaz"
+        ],
+        "antisemitisme": [
+          "antissemit",
+          "holocaust",
+          "shoa",
+          "negacionis"
+        ]
+      },
+      "noyau": [
+        "judeu",
+        "judeus",
+        "judaísmo",
+        "comunidade judaica",
+        "sinagoga",
+        "rabino",
+        "kosher",
+        "sefardita",
+        "asquenazi"
+      ],
+      "antisemitisme": [
+        "antissemitismo",
+        "antissemita",
+        "Holocausto",
+        "Shoá",
+        "negacionismo",
+        "profanação"
+      ],
+      "culture": [
+        "exposição",
+        "festival",
+        "congresso",
+        "documentário",
+        "podcast",
+        "memorial",
+        "museu",
+        "conferência"
+      ],
+      "livres": [
+        "livro",
+        "romance",
+        "ensaio",
+        "lançamento",
+        "biografia",
+        "tradução",
+        "editora"
+      ]
+    },
+    "el": {
+      "nom": "grec",
+      "racines": {
+        "noyau": [
+          "εβραι",
+          "ιουδα",
+          "συναγωγ",
+          "ραβιν",
+          "κοσερ"
+        ],
+        "antisemitisme": [
+          "αντισημιτ",
+          "ολοκαυτωμα",
+          "σοα"
+        ]
+      },
+      "noyau": [
+        "Εβραίοι",
+        "εβραϊκός",
+        "ιουδαϊσμός",
+        "εβραϊκή κοινότητα",
+        "συναγωγή",
+        "ραβίνος",
+        "κοσέρ"
+      ],
+      "antisemitisme": [
+        "αντισημιτισμός",
+        "αντισημιτικό",
+        "Ολοκαύτωμα",
+        "Σοά",
+        "βεβήλωση"
+      ],
+      "culture": [
+        "έκθεση",
+        "φεστιβάλ",
+        "συνέδριο",
+        "ντοκιμαντέρ",
+        "podcast",
+        "μνημείο",
+        "μουσείο"
+      ],
+      "livres": [
+        "βιβλίο",
+        "μυθιστόρημα",
+        "δοκίμιο",
+        "έκδοση",
+        "βιογραφία",
+        "μετάφραση"
+      ]
+    },
+    "pl": {
+      "nom": "polonais",
+      "racines": {
+        "noyau": [
+          "zyd",
+          "judaiz",
+          "synagog",
+          "rabin",
+          "koszern",
+          "jidysz",
+          "sefardyj",
+          "aszkenaz"
+        ],
+        "antisemitisme": [
+          "antysemit",
+          "zaglad",
+          "holokaust",
+          "holocaust"
+        ]
+      },
+      "noyau": [
+        "żydowski",
+        "Żydzi",
+        "judaizm",
+        "gmina żydowska",
+        "synagoga",
+        "rabin",
+        "koszerny",
+        "jidysz",
+        "sefardyjski"
+      ],
+      "antisemitisme": [
+        "antysemityzm",
+        "antysemicki",
+        "Zagłada",
+        "Holokaust",
+        "negacjonizm",
+        "profanacja"
+      ],
+      "culture": [
+        "wystawa",
+        "festiwal",
+        "konferencja",
+        "film dokumentalny",
+        "podcast",
+        "pomnik",
+        "muzeum"
+      ],
+      "livres": [
+        "książka",
+        "powieść",
+        "esej",
+        "premiera",
+        "biografia",
+        "przekład",
+        "wydawnictwo"
+      ]
+    },
+    "cs": {
+      "nom": "tchèque",
+      "racines": {
+        "noyau": [
+          "zid",
+          "judaism",
+          "synagog",
+          "rabin",
+          "koser",
+          "jidis",
+          "sefard"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "židovský",
+        "Židé",
+        "judaismus",
+        "židovská obec",
+        "synagoga",
+        "rabín",
+        "košer",
+        "jidiš"
+      ],
+      "antisemitisme": [
+        "antisemitismus",
+        "antisemitský",
+        "holokaust",
+        "šoa",
+        "popírání holokaustu",
+        "znesvěcení"
+      ],
+      "culture": [
+        "výstava",
+        "festival",
+        "konference",
+        "dokument",
+        "podcast",
+        "památník",
+        "muzeum"
+      ],
+      "livres": [
+        "kniha",
+        "román",
+        "esej",
+        "vychází",
+        "biografie",
+        "překlad",
+        "nakladatelství"
+      ]
+    },
+    "sk": {
+      "nom": "slovaque",
+      "racines": {
+        "noyau": [
+          "zid",
+          "judaiz",
+          "synagog",
+          "rabin",
+          "koser"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "židovský",
+        "Židia",
+        "judaizmus",
+        "židovská obec",
+        "synagóga",
+        "rabín",
+        "košer"
+      ],
+      "antisemitisme": [
+        "antisemitizmus",
+        "antisemitský",
+        "holokaust",
+        "šoa",
+        "popieranie holokaustu"
+      ],
+      "culture": [
+        "výstava",
+        "festival",
+        "konferencia",
+        "dokument",
+        "podcast",
+        "pamätník",
+        "múzeum"
+      ],
+      "livres": [
+        "kniha",
+        "román",
+        "esej",
+        "vychádza",
+        "biografia",
+        "preklad",
+        "vydavateľstvo"
+      ]
+    },
+    "hu": {
+      "nom": "hongrois",
+      "racines": {
+        "noyau": [
+          "zsido",
+          "judaiz",
+          "zsinagog",
+          "rabbi",
+          "koser",
+          "jiddis",
+          "szefard"
+        ],
+        "antisemitisme": [
+          "antiszemit",
+          "holokauszt",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "zsidó",
+        "zsidók",
+        "judaizmus",
+        "zsidó hitközség",
+        "zsinagóga",
+        "rabbi",
+        "kóser",
+        "jiddis"
+      ],
+      "antisemitisme": [
+        "antiszemitizmus",
+        "antiszemita",
+        "holokauszt",
+        "soá",
+        "holokauszttagadás",
+        "meggyalázás"
+      ],
+      "culture": [
+        "kiállítás",
+        "fesztivál",
+        "konferencia",
+        "dokumentumfilm",
+        "podcast",
+        "emlékmű",
+        "múzeum"
+      ],
+      "livres": [
+        "könyv",
+        "regény",
+        "esszé",
+        "megjelent",
+        "életrajz",
+        "fordítás",
+        "kiadó"
+      ]
+    },
+    "ro": {
+      "nom": "roumain",
+      "racines": {
+        "noyau": [
+          "evre",
+          "iudai",
+          "sinagog",
+          "rabin",
+          "cuser",
+          "sefard"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holocaust",
+          "negationis"
+        ]
+      },
+      "noyau": [
+        "evreu",
+        "evrei",
+        "iudaism",
+        "comunitatea evreiască",
+        "sinagogă",
+        "rabin",
+        "cușer"
+      ],
+      "antisemitisme": [
+        "antisemitism",
+        "antisemit",
+        "Holocaust",
+        "Shoah",
+        "negaționism",
+        "profanare"
+      ],
+      "culture": [
+        "expoziție",
+        "festival",
+        "conferință",
+        "documentar",
+        "podcast",
+        "memorial",
+        "muzeu"
+      ],
+      "livres": [
+        "carte",
+        "roman",
+        "eseu",
+        "apariție",
+        "biografie",
+        "traducere",
+        "editura"
+      ]
+    },
+    "bg": {
+      "nom": "bulgare",
+      "racines": {
+        "noyau": [
+          "еврей",
+          "юдаиз",
+          "синагог",
+          "равин",
+          "кошер"
+        ],
+        "antisemitisme": [
+          "антисемит",
+          "холокост",
+          "шоа"
+        ]
+      },
+      "noyau": [
+        "евреи",
+        "еврейски",
+        "юдаизъм",
+        "еврейска общност",
+        "синагога",
+        "равин",
+        "кошер"
+      ],
+      "antisemitisme": [
+        "антисемитизъм",
+        "антисемитски",
+        "Холокост",
+        "Шоа",
+        "оскверняване"
+      ],
+      "culture": [
+        "изложба",
+        "фестивал",
+        "конференция",
+        "документален филм",
+        "подкаст",
+        "мемориал",
+        "музей"
+      ],
+      "livres": [
+        "книга",
+        "роман",
+        "есе",
+        "издание",
+        "биография",
+        "превод",
+        "издателство"
+      ]
+    },
+    "uk": {
+      "nom": "ukrainien",
+      "racines": {
+        "noyau": [
+          "євре",
+          "юдаїз",
+          "юдаиз",
+          "синагог",
+          "рабин",
+          "кошер"
+        ],
+        "antisemitisme": [
+          "антисеміт",
+          "антисемит",
+          "голокост"
+        ]
+      },
+      "noyau": [
+        "євреї",
+        "єврейський",
+        "юдаїзм",
+        "єврейська громада",
+        "синагога",
+        "рабин",
+        "кошерний"
+      ],
+      "antisemitisme": [
+        "антисемітизм",
+        "антисемітський",
+        "Голокост",
+        "Шоа",
+        "осквернення"
+      ],
+      "culture": [
+        "виставка",
+        "фестиваль",
+        "конференція",
+        "документальний фільм",
+        "подкаст",
+        "меморіал",
+        "музей"
+      ],
+      "livres": [
+        "книга",
+        "роман",
+        "есе",
+        "видання",
+        "біографія",
+        "переклад",
+        "видавництво"
+      ]
+    },
+    "ru": {
+      "nom": "russe",
+      "racines": {
+        "noyau": [
+          "евре",
+          "иудаиз",
+          "синагог",
+          "раввин",
+          "кошер"
+        ],
+        "antisemitisme": [
+          "антисемит",
+          "холокост",
+          "шоа"
+        ]
+      },
+      "noyau": [
+        "евреи",
+        "еврейский",
+        "иудаизм",
+        "еврейская община",
+        "синагога",
+        "раввин",
+        "кошерный"
+      ],
+      "antisemitisme": [
+        "антисемитизм",
+        "антисемитский",
+        "Холокост",
+        "Шоа",
+        "осквернение"
+      ],
+      "culture": [
+        "выставка",
+        "фестиваль",
+        "конференция",
+        "документальный фильм",
+        "подкаст",
+        "мемориал",
+        "музей"
+      ],
+      "livres": [
+        "книга",
+        "роман",
+        "эссе",
+        "издание",
+        "биография",
+        "перевод",
+        "издательство"
+      ]
+    },
+    "lt": {
+      "nom": "lituanien",
+      "racines": {
+        "noyau": [
+          "zyd",
+          "judaiz",
+          "sinagog",
+          "rabin",
+          "koser",
+          "litvak"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust"
+        ]
+      },
+      "noyau": [
+        "žydai",
+        "žydų",
+        "judaizmas",
+        "žydų bendruomenė",
+        "sinagoga",
+        "rabinas",
+        "košerinis",
+        "litvakai"
+      ],
+      "antisemitisme": [
+        "antisemitizmas",
+        "antisemitinis",
+        "Holokaustas",
+        "Šoa",
+        "išniekinimas"
+      ],
+      "culture": [
+        "paroda",
+        "festivalis",
+        "konferencija",
+        "dokumentinis filmas",
+        "podcast",
+        "memorialas",
+        "muziejus"
+      ],
+      "livres": [
+        "knyga",
+        "romanas",
+        "esė",
+        "leidinys",
+        "biografija",
+        "vertimas",
+        "leidykla"
+      ]
+    },
+    "lv": {
+      "nom": "letton",
+      "racines": {
+        "noyau": [
+          "ebre",
+          "judais",
+          "sinagog",
+          "rabin",
+          "koser"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust"
+        ]
+      },
+      "noyau": [
+        "ebreji",
+        "ebreju",
+        "jūdaisms",
+        "ebreju kopiena",
+        "sinagoga",
+        "rabīns",
+        "košers"
+      ],
+      "antisemitisme": [
+        "antisemītisms",
+        "antisemītisks",
+        "Holokausts",
+        "Šoa",
+        "apgānīšana"
+      ],
+      "culture": [
+        "izstāde",
+        "festivāls",
+        "konference",
+        "dokumentālā filma",
+        "podkāsts",
+        "memoriāls",
+        "muzejs"
+      ],
+      "livres": [
+        "grāmata",
+        "romāns",
+        "eseja",
+        "izdevums",
+        "biogrāfija",
+        "tulkojums",
+        "apgāds"
+      ]
+    },
+    "et": {
+      "nom": "estonien",
+      "racines": {
+        "noyau": [
+          "juud",
+          "judais",
+          "sunagoog",
+          "kosser"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust"
+        ]
+      },
+      "noyau": [
+        "juudid",
+        "juudi",
+        "judaism",
+        "juudi kogukond",
+        "sünagoog",
+        "rabi",
+        "koššer"
+      ],
+      "antisemitisme": [
+        "antisemitism",
+        "antisemiitlik",
+        "holokaust",
+        "Šoa",
+        "rüvetamine"
+      ],
+      "culture": [
+        "näitus",
+        "festival",
+        "konverents",
+        "dokumentaalfilm",
+        "podcast",
+        "memoriaal",
+        "muuseum"
+      ],
+      "livres": [
+        "raamat",
+        "romaan",
+        "essee",
+        "ilmus",
+        "biograafia",
+        "tõlge",
+        "kirjastus"
+      ]
+    },
+    "fi": {
+      "nom": "finnois",
+      "racines": {
+        "noyau": [
+          "juutalai",
+          "synagog",
+          "juutalaisuu",
+          "kosher"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust"
+        ]
+      },
+      "noyau": [
+        "juutalaiset",
+        "juutalainen",
+        "juutalaisuus",
+        "juutalaisyhteisö",
+        "synagoga",
+        "rabbi",
+        "kosher"
+      ],
+      "antisemitisme": [
+        "antisemitismi",
+        "antisemitistinen",
+        "holokausti",
+        "Šoa",
+        "häpäisy"
+      ],
+      "culture": [
+        "näyttely",
+        "festivaali",
+        "konferenssi",
+        "dokumentti",
+        "podcast",
+        "muistomerkki",
+        "museo"
+      ],
+      "livres": [
+        "kirja",
+        "romaani",
+        "essee",
+        "ilmestyy",
+        "elämäkerta",
+        "käännös",
+        "kustantamo"
+      ]
+    },
+    "sv": {
+      "nom": "suédois",
+      "racines": {
+        "noyau": [
+          "juda",
+          "judi",
+          "synagog",
+          "rabbin",
+          "kosher",
+          "jiddisch"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "forintels",
+          "judehat"
+        ]
+      },
+      "noyau": [
+        "judar",
+        "judisk",
+        "judendom",
+        "judiska församlingen",
+        "synagoga",
+        "rabbin",
+        "kosher",
+        "jiddisch"
+      ],
+      "antisemitisme": [
+        "antisemitism",
+        "antisemitisk",
+        "Förintelsen",
+        "Shoah",
+        "skändning"
+      ],
+      "culture": [
+        "utställning",
+        "festival",
+        "konferens",
+        "dokumentär",
+        "podd",
+        "minnesmärke",
+        "museum"
+      ],
+      "livres": [
+        "bok",
+        "roman",
+        "essä",
+        "utkommer",
+        "biografi",
+        "översättning",
+        "förlag"
+      ]
+    },
+    "no": {
+      "nom": "norvégien",
+      "racines": {
+        "noyau": [
+          "jod",
+          "synagog",
+          "rabbin",
+          "kosher",
+          "jiddisch"
+        ],
+        "antisemitisme": [
+          "antisemitt",
+          "holocaust",
+          "jodehat"
+        ]
+      },
+      "noyau": [
+        "jøder",
+        "jødisk",
+        "jødedom",
+        "Det Mosaiske Trossamfund",
+        "synagoge",
+        "rabbiner",
+        "kosher"
+      ],
+      "antisemitisme": [
+        "antisemittisme",
+        "antisemittisk",
+        "Holocaust",
+        "Shoah",
+        "skjending"
+      ],
+      "culture": [
+        "utstilling",
+        "festival",
+        "konferanse",
+        "dokumentar",
+        "podkast",
+        "minnesmerke",
+        "museum"
+      ],
+      "livres": [
+        "bok",
+        "roman",
+        "essay",
+        "utgivelse",
+        "biografi",
+        "oversettelse",
+        "forlag"
+      ]
+    },
+    "da": {
+      "nom": "danois",
+      "racines": {
+        "noyau": [
+          "jod",
+          "synagog",
+          "rabbin",
+          "kosher",
+          "jiddisch"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holocaust",
+          "jodehad"
+        ]
+      },
+      "noyau": [
+        "jøder",
+        "jødisk",
+        "jødedom",
+        "Det Jødiske Samfund",
+        "synagoge",
+        "rabbiner",
+        "kosher"
+      ],
+      "antisemitisme": [
+        "antisemitisme",
+        "antisemitisk",
+        "Holocaust",
+        "Shoah",
+        "skænding"
+      ],
+      "culture": [
+        "udstilling",
+        "festival",
+        "konference",
+        "dokumentar",
+        "podcast",
+        "mindesmærke",
+        "museum"
+      ],
+      "livres": [
+        "bog",
+        "roman",
+        "essay",
+        "udgivelse",
+        "biografi",
+        "oversættelse",
+        "forlag"
+      ]
+    },
+    "is": {
+      "nom": "islandais",
+      "racines": {
+        "noyau": [
+          "gyding",
+          "samkunduhus"
+        ],
+        "antisemitisme": [
+          "gydingahat",
+          "antisemit",
+          "helfor"
+        ]
+      },
+      "noyau": [
+        "gyðingar",
+        "gyðinga",
+        "gyðingdómur",
+        "samkunduhús",
+        "rabbíni",
+        "kósher"
+      ],
+      "antisemitisme": [
+        "gyðingahatur",
+        "antisemitismi",
+        "helförin",
+        "Shoah"
+      ],
+      "culture": [
+        "sýning",
+        "hátíð",
+        "ráðstefna",
+        "heimildarmynd",
+        "hlaðvarp",
+        "minnisvarði",
+        "safn"
+      ],
+      "livres": [
+        "bók",
+        "skáldsaga",
+        "ritgerð",
+        "útgáfa",
+        "ævisaga",
+        "þýðing",
+        "forlag"
+      ]
+    },
+    "hr": {
+      "nom": "croate",
+      "racines": {
+        "noyau": [
+          "zidov",
+          "judaiz",
+          "sinagog",
+          "rabin",
+          "koser"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "Židovi",
+        "židovski",
+        "judaizam",
+        "židovska općina",
+        "sinagoga",
+        "rabin",
+        "košer"
+      ],
+      "antisemitisme": [
+        "antisemitizam",
+        "antisemitski",
+        "holokaust",
+        "Šoa",
+        "skrnavljenje"
+      ],
+      "culture": [
+        "izložba",
+        "festival",
+        "konferencija",
+        "dokumentarac",
+        "podcast",
+        "spomenik",
+        "muzej"
+      ],
+      "livres": [
+        "knjiga",
+        "roman",
+        "esej",
+        "izdanje",
+        "biografija",
+        "prijevod",
+        "nakladnik"
+      ]
+    },
+    "sr": {
+      "nom": "serbe",
+      "racines": {
+        "noyau": [
+          "јевреј",
+          "јудаиз",
+          "синагог",
+          "рабин",
+          "кошер"
+        ],
+        "antisemitisme": [
+          "антисемит",
+          "холокауст",
+          "шоа"
+        ]
+      },
+      "noyau": [
+        "Јевреји",
+        "јеврејски",
+        "јудаизам",
+        "јеврејска општина",
+        "синагога",
+        "рабин",
+        "кошер"
+      ],
+      "antisemitisme": [
+        "антисемитизам",
+        "антисемитски",
+        "холокауст",
+        "Шоа",
+        "скрнављење"
+      ],
+      "culture": [
+        "изложба",
+        "фестивал",
+        "конференција",
+        "документарац",
+        "подкаст",
+        "споменик",
+        "музеј"
+      ],
+      "livres": [
+        "књига",
+        "роман",
+        "есеј",
+        "издање",
+        "биографија",
+        "превод",
+        "издавач"
+      ]
+    },
+    "bs": {
+      "nom": "bosnien",
+      "racines": {
+        "noyau": [
+          "jevrej",
+          "zidov",
+          "judaiz",
+          "sinagog",
+          "rabin",
+          "koser"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "Jevreji",
+        "jevrejski",
+        "judaizam",
+        "jevrejska zajednica",
+        "sinagoga",
+        "rabin",
+        "košer"
+      ],
+      "antisemitisme": [
+        "antisemitizam",
+        "antisemitski",
+        "holokaust",
+        "Šoa",
+        "skrnavljenje"
+      ],
+      "culture": [
+        "izložba",
+        "festival",
+        "konferencija",
+        "dokumentarac",
+        "podcast",
+        "spomenik",
+        "muzej"
+      ],
+      "livres": [
+        "knjiga",
+        "roman",
+        "esej",
+        "izdanje",
+        "biografija",
+        "prijevod",
+        "izdavač"
+      ]
+    },
+    "sl": {
+      "nom": "slovène",
+      "racines": {
+        "noyau": [
+          "judov",
+          "judje",
+          "judovstv",
+          "sinagog",
+          "rabin",
+          "koser"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokavst",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "Judje",
+        "judovski",
+        "judovstvo",
+        "judovska skupnost",
+        "sinagoga",
+        "rabin",
+        "košer"
+      ],
+      "antisemitisme": [
+        "antisemitizem",
+        "antisemitski",
+        "holokavst",
+        "Šoa",
+        "skrunitev"
+      ],
+      "culture": [
+        "razstava",
+        "festival",
+        "konferenca",
+        "dokumentarec",
+        "podkast",
+        "spomenik",
+        "muzej"
+      ],
+      "livres": [
+        "knjiga",
+        "roman",
+        "esej",
+        "izdaja",
+        "biografija",
+        "prevod",
+        "založba"
+      ]
+    },
+    "mk": {
+      "nom": "macédonien",
+      "racines": {
+        "noyau": [
+          "евреј",
+          "јудаиз",
+          "синагог",
+          "рабин",
+          "кошер"
+        ],
+        "antisemitisme": [
+          "антисемит",
+          "холокауст",
+          "шоа"
+        ]
+      },
+      "noyau": [
+        "Евреи",
+        "еврејски",
+        "јудаизам",
+        "еврејска заедница",
+        "синагога",
+        "рабин",
+        "кошер"
+      ],
+      "antisemitisme": [
+        "антисемитизам",
+        "антисемитски",
+        "холокауст",
+        "Шоа",
+        "оскверување"
+      ],
+      "culture": [
+        "изложба",
+        "фестивал",
+        "конференција",
+        "документарец",
+        "подкаст",
+        "споменик",
+        "музеј"
+      ],
+      "livres": [
+        "книга",
+        "роман",
+        "есеј",
+        "издание",
+        "биографија",
+        "превод",
+        "издавач"
+      ]
+    },
+    "sq": {
+      "nom": "albanais",
+      "racines": {
+        "noyau": [
+          "hebre",
+          "judaiz",
+          "sinagog",
+          "rabin",
+          "kosher"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokaust"
+        ]
+      },
+      "noyau": [
+        "hebrenjtë",
+        "hebraik",
+        "judaizmi",
+        "komuniteti hebre",
+        "sinagoga",
+        "rabin",
+        "kosher"
+      ],
+      "antisemitisme": [
+        "antisemitizmi",
+        "antisemit",
+        "Holokausti",
+        "Shoah",
+        "përdhosje"
+      ],
+      "culture": [
+        "ekspozitë",
+        "festival",
+        "konferencë",
+        "dokumentar",
+        "podcast",
+        "memorial",
+        "muze"
+      ],
+      "livres": [
+        "libër",
+        "roman",
+        "ese",
+        "botim",
+        "biografi",
+        "përkthim",
+        "shtëpia botuese"
+      ]
+    },
+    "tr": {
+      "nom": "turc",
+      "racines": {
+        "noyau": [
+          "yahudi",
+          "sinagog",
+          "haham",
+          "koser",
+          "musevi"
+        ],
+        "antisemitisme": [
+          "antisemit",
+          "holokost",
+          "soa"
+        ]
+      },
+      "noyau": [
+        "Yahudi",
+        "Yahudiler",
+        "Yahudilik",
+        "Yahudi cemaati",
+        "sinagog",
+        "haham",
+        "koşer"
+      ],
+      "antisemitisme": [
+        "antisemitizm",
+        "antisemitik",
+        "Holokost",
+        "Şoa",
+        "saygısızlık"
+      ],
+      "culture": [
+        "sergi",
+        "festival",
+        "konferans",
+        "belgesel",
+        "podcast",
+        "anıt",
+        "müze"
+      ],
+      "livres": [
+        "kitap",
+        "roman",
+        "deneme",
+        "yayın",
+        "biyografi",
+        "çeviri",
+        "yayınevi"
+      ]
+    }
+  }
+}
