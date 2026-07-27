@@ -117,6 +117,15 @@ test('buildGlobalFeeds fournit livres, podcasts et événements', () => {
   assert.ok(feeds.some((f) => f.type === 'livre'));
 });
 
+test('buildGlobalFeeds sans Google News ne laisse que des flux d’éditeurs', () => {
+  const feeds = buildGlobalFeeds(config, { days: 7, googleNews: false });
+  assert.ok(feeds.length > 0);
+  assert.ok(
+    feeds.every((f) => !f.url.includes('news.google.com')),
+    'aucune requête Google News ne doit subsister',
+  );
+});
+
 test('dedupeFeeds garde la source de plus fort poids', () => {
   const feeds = dedupeFeeds([
     { id: 'a', url: 'https://x/f', poids: 1 },

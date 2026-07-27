@@ -205,15 +205,18 @@ async function commandeRevue(options) {
 async function commandeSources(options) {
   const config = await loadConfig();
   const jours = nombre(options.jours, 7);
+  const googleNews = !options['sans-google-news'];
   const feeds = dedupeFeeds([
     ...buildEuropeanFeeds(config, {
       profils: liste(options.profils),
       days: jours,
       pays: liste(options.pays),
-      googleNews: !options['sans-google-news'],
+      googleNews,
       medias: !options['sans-medias'],
     }),
-    ...buildGlobalFeeds(config, { days: jours }),
+    // `googleNews` vaut aussi pour les requêtes « parutions » mondiales :
+    // --sans-google-news ne doit laisser que des flux d'éditeurs.
+    ...buildGlobalFeeds(config, { days: jours, googleNews }),
   ]);
 
   if (!options.check) {
