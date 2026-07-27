@@ -8,5 +8,6 @@ export { grouper } from './dedupe.js';
 export { Traducteur, traduireArticles } from './translate/index.js';
 export { creerProvider } from './translate/providers.js';
 export { Cache } from './cache.js';
-export { renderHtml, renderMarkdown, renderJson, FORMATS } from './render/index.js';
+export { renderHtml, renderMarkdown, renderJson, renderEmail, FORMATS } from './render/index.js';
+export { envoyerRevue, creerTransport, transportMemoire, parseDestinataires } from './mail.js';
 export { resolveWindow, jewishWeek } from './util/dates.js';

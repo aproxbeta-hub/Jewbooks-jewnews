@@ -10,11 +10,12 @@ l'Europe. Il produit, chaque semaine, un document unique qui rassemble :
   géographique ;
 - **les podcasts** et **les événements** (expositions, colloques, festivals).
 
-Sortie en HTML autonome (à lire ou à imprimer), en Markdown (à découper) et en
-JSON (à réinjecter ailleurs).
+Sortie en HTML autonome (à lire ou à imprimer), en Markdown (à découper), en
+JSON (à réinjecter ailleurs) — ou **directement dans votre boîte, tous les
+dimanches matin**.
 
 ```
-jewnews revue --semaine --traduction anthropic
+jewnews revue --semaine --traduction anthropic --email moi@exemple.fr
 ```
 
 ---
@@ -28,9 +29,10 @@ npm install
 node bin/jewnews.js aide
 ```
 
-Node 20 ou plus. Deux dépendances seulement (`@hebcal/core` et ses locales,
-pour le repère calendaire optionnel) ; l'analyse de flux, le dédoublonnage et
-le rendu n'utilisent rien d'autre que la bibliothèque standard.
+Node 20 ou plus. Trois dépendances : `@hebcal/core` et ses locales pour le
+repère calendaire optionnel, `nodemailer` pour l'envoi SMTP. L'analyse de flux,
+la traduction, le dédoublonnage et le rendu n'utilisent rien d'autre que la
+bibliothèque standard.
 
 ## Comment la couverture européenne est obtenue
 
@@ -86,6 +88,68 @@ la collecte.
 Pour Anthropic, le modèle est `claude-sonnet-5` ; changez-le avec
 `JEWNEWS_ANTHROPIC_MODEL`.
 
+## Recevoir la revue par courriel
+
+### En une commande
+
+```bash
+export SMTP_URL='smtps://vous%40gmail.com:MOTDEPASSEAPP@smtp.gmail.com:465'
+jewnews revue --semaine --traduction anthropic \
+  --email vous@gmail.com --sans-fichiers
+```
+
+Avec Gmail, `MOTDEPASSEAPP` est un **mot de passe d'application** (compte
+Google > Sécurité > Validation en deux étapes > Mots de passe des
+applications), pas le mot de passe du compte. L'arobase de l'identifiant
+s'écrit `%40` à l'intérieur d'une URL.
+
+Pour vérifier avant d'envoyer quoi que ce soit :
+
+```bash
+jewnews revue --semaine --email vous@gmail.com --essai-a-vide
+```
+
+Le message est un multipart HTML + texte. Le HTML est **écrit spécialement
+pour les clients de messagerie** : styles en ligne, une seule colonne, aucune
+variable CSS ni requête média — Gmail et Outlook les suppriment. Le rendu web
+(`--format html`) reste plus riche, mais ne survivrait pas à la boîte de
+réception.
+
+Transports disponibles : `smtp` (défaut, n'importe quel serveur) et `resend`
+(API HTTP, `RESEND_API_KEY`) — utile depuis un environnement où le port 587
+est fermé, ce qui est le cas de nombreux CI.
+
+### Tous les dimanches, sans machine allumée
+
+Le dépôt contient `.github/workflows/revue-hebdo.yml` : GitHub établit et
+envoie la revue chaque dimanche à 6 h UTC (8 h à Paris l'été). Rien à
+héberger. Configuration unique, dans *Settings > Secrets and variables >
+Actions* :
+
+| | Nom | Valeur |
+|---|---|---|
+| Secret | `SMTP_URL` | `smtps://vous%40gmail.com:MOTDEPASSEAPP@smtp.gmail.com:465` |
+| Secret | `ANTHROPIC_API_KEY` | pour la traduction (sans elle, titres en VO) |
+| Variable | `JEWNEWS_EMAIL` | destinataires, séparés par des virgules |
+| Variable | `JEWNEWS_FROM` | expéditeur (facultatif) |
+
+L'onglet *Actions > Revue hebdomadaire > Run workflow* permet de déclencher un
+numéro à la demande, de restreindre les pays, ou de faire un essai à vide sans
+rien envoyer. Chaque édition est aussi archivée comme *artifact* pendant
+90 jours : la boîte de réception n'est pas la seule copie.
+
+Le cache des traductions est conservé d'une semaine à l'autre par le workflow,
+donc seuls les nouveaux articles sont facturés.
+
+### Ailleurs qu'avec GitHub
+
+Une ligne de `crontab`, sur n'importe quelle machine allumée le dimanche :
+
+```cron
+0 8 * * 0 cd /chemin/vers/Jewbooks-jewnews && /usr/bin/node bin/jewnews.js revue \
+  --semaine --traduction anthropic --email vous@exemple.fr --sans-fichiers --silencieux
+```
+
 ## Utilisation
 
 ```bash
@@ -118,7 +182,9 @@ Les fichiers sont écrits dans `dist/` sous le nom `revue-AAAA-MM-JJ.html`,
 | `--par-pays <n>` | articles retenus par pays (défaut 6) |
 | `--pertinence-min <n>` | seuil de pertinence juive (défaut 3) |
 | `--traduction <nom>` | fournisseur de traduction |
-| `--format html,md,json` | formats produits |
+| `--format html,md,json,email,texte` | formats produits |
+| `--email <adresses>` / `--transport smtp\|resend` / `--essai-a-vide` | envoi par courriel |
+| `--sans-fichiers` | n'écrire aucun fichier, se contenter d'envoyer |
 | `--calendrier` | ajoute le repère du calendrier hébraïque |
 | `--sans-cache` / `--vider-cache` | gestion du cache disque |
 
@@ -201,8 +267,9 @@ langue déclarée et que chaque langue fournit les quatre groupes.
 npm test
 ```
 
-98 tests, sans accès réseau : le réseau est simulé par des fixtures, y compris
-pour la génération de bout en bout d'une revue complète.
+114 tests, sans accès réseau : le réseau est simulé par des fixtures, y compris
+pour la génération de bout en bout d'une revue complète et pour l'expédition du
+message (transport en mémoire).
 
 ## Licence
 

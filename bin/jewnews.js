@@ -11,7 +11,8 @@ import { genererRevue } from '../src/digest.js';
 import { loadConfig, buildEuropeanFeeds, buildGlobalFeeds, dedupeFeeds, PROFILS } from '../src/sources.js';
 import { collect } from '../src/collect.js';
 import { Cache } from '../src/cache.js';
-import { FORMATS } from '../src/render/index.js';
+import { FORMATS, renderEmail } from '../src/render/index.js';
+import { envoyerRevue, parseDestinataires } from '../src/mail.js';
 
 const AIDE = `
 jewnews — revue de presse hebdomadaire : Europe pays par pays, parutions mondiales.
@@ -51,11 +52,22 @@ TRADUCTION
                            LIBRETRANSLATE_URL
 
 SORTIE
-  --format <liste>         html, md, json (défaut : html,md)
+  --format <liste>         html, md, json, email, texte (défaut : html,md)
   --sortie <dossier>       dossier de destination (défaut : dist)
   --stdout                 écrire sur la sortie standard au lieu de fichiers
   --calendrier             ajouter le repère du calendrier hébraïque
   --israel                 calendrier selon le rite d'Israël
+
+ENVOI PAR COURRIEL
+  --email <adresses>       destinataires, séparés par des virgules
+  --de <adresse>           expéditeur (défaut : JEWNEWS_FROM, sinon le
+                           premier destinataire)
+  --transport <nom>        smtp (défaut) ou resend
+  --sujet <texte>          objet du message (défaut : engendré)
+  --sans-fichiers          n'écrire aucun fichier, se contenter d'envoyer
+  --essai-a-vide           tout préparer et afficher, sans rien envoyer
+                           SMTP   : SMTP_URL, ou SMTP_HOST/PORT/USER/PASS
+                           Resend : RESEND_API_KEY
 
 TECHNIQUE
   --concurrence <n>        requêtes simultanées (défaut : 8)
@@ -66,6 +78,7 @@ TECHNIQUE
 
 EXEMPLES
   jewnews revue --semaine --traduction anthropic
+  jewnews revue --semaine --email moi@exemple.fr --sans-fichiers
   jewnews revue --pays FR,DE,PL,HU --jours 14 --format md --stdout
   jewnews sources --check --pays IT
 `;
@@ -172,8 +185,16 @@ async function commandeRevue(options) {
     contenu: FORMATS[format].rendre(revue),
   }));
 
+  const destinataires = parseDestinataires(
+    typeof options.email === 'string' ? options.email : '',
+  );
+
   if (options.stdout) {
     for (const rendu of rendus) process.stdout.write(rendu.contenu);
+  } else if (options['sans-fichiers']) {
+    if (!destinataires.length) {
+      throw new Error('--sans-fichiers sans --email : la revue ne serait envoyée nulle part.');
+    }
   } else {
     const dossier = typeof options.sortie === 'string' ? options.sortie : 'dist';
     await mkdir(dossier, { recursive: true });
@@ -182,6 +203,32 @@ async function commandeRevue(options) {
       const fichier = path.join(dossier, `${base}.${rendu.extension}`);
       await writeFile(fichier, rendu.contenu, 'utf8');
       log(`✓ ${fichier}`);
+    }
+  }
+
+  if (destinataires.length) {
+    const message = renderEmail(revue);
+    const sujet = typeof options.sujet === 'string' ? options.sujet : message.sujet;
+
+    if (options['essai-a-vide']) {
+      log(`\nEssai à vide — aucun message envoyé.`);
+      log(`  destinataires : ${destinataires.join(', ')}`);
+      log(`  expéditeur    : ${options.de || process.env.JEWNEWS_FROM || destinataires[0]}`);
+      log(`  objet         : ${sujet}`);
+      log(`  corps         : ${message.html.length} octets HTML, ${message.texte.length} octets texte`);
+    } else {
+      const resultat = await envoyerRevue(
+        {
+          a: destinataires,
+          de: typeof options.de === 'string' ? options.de : undefined,
+          sujet,
+          html: message.html,
+          texte: message.texte,
+        },
+        { transport: typeof options.transport === 'string' ? options.transport : 'smtp' },
+      );
+      log(`✉ envoyée à ${resultat.destinataires.join(', ')} via ${resultat.transport}`);
+      if (resultat.refuse?.length) log(`  refusée pour : ${resultat.refuse.join(', ')}`);
     }
   }
 

@@ -1,0 +1,115 @@
+name: Revue hebdomadaire
+
+# Envoie la revue par courriel tous les dimanches matin.
+#
+# Rien à installer ni à laisser allumé : GitHub exécute le travail.
+# À configurer une fois dans Settings > Secrets and variables > Actions :
+#
+#   Secrets
+#     SMTP_URL            smtps://adresse%40gmail.com:MOTDEPASSEAPP@smtp.gmail.com:465
+#                         (Gmail exige un mot de passe d'application, pas le
+#                          mot de passe du compte ; le @ de l'identifiant
+#                          s'écrit %40 dans une URL)
+#     ANTHROPIC_API_KEY   pour la traduction (facultatif mais recommandé)
+#
+#   Variables
+#     JEWNEWS_EMAIL       destinataires, séparés par des virgules
+#     JEWNEWS_FROM        expéditeur (facultatif, défaut : le destinataire)
+#
+# Le déclenchement manuel (onglet Actions > Run workflow) permet de tester
+# sans attendre dimanche, et d'envoyer un essai à vide.
+
+on:
+  schedule:
+    # 06:00 UTC le dimanche — 08:00 à Paris l'été, 07:00 l'hiver.
+    - cron: '0 6 * * 0'
+  workflow_dispatch:
+    inputs:
+      essai_a_vide:
+        description: 'Tout préparer sans envoyer le message'
+        type: boolean
+        default: false
+      jours:
+        description: 'Fenêtre en jours'
+        type: string
+        default: '7'
+      pays:
+        description: 'Codes ISO séparés par des virgules (vide = toute l’Europe)'
+        type: string
+        default: ''
+
+concurrency:
+  group: revue-hebdo
+  cancel-in-progress: false
+
+jobs:
+  revue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # Le cache des traductions survit d'une semaine à l'autre : seuls les
+      # nouveaux articles sont facturés.
+      - name: Restaurer le cache de traduction
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: jewnews-cache-${{ github.run_id }}
+          restore-keys: jewnews-cache-
+
+      - name: Vérifier que les destinataires sont configurés
+        if: ${{ !inputs.essai_a_vide }}
+        run: |
+          if [ -z "${{ vars.JEWNEWS_EMAIL }}" ]; then
+            echo "::error::La variable JEWNEWS_EMAIL n'est pas définie (Settings > Secrets and variables > Actions > Variables)."
+            exit 1
+          fi
+
+      - name: Établir et envoyer la revue
+        env:
+          SMTP_URL: ${{ secrets.SMTP_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JEWNEWS_FROM: ${{ vars.JEWNEWS_FROM }}
+          DESTINATAIRES: ${{ vars.JEWNEWS_EMAIL }}
+          JOURS: ${{ inputs.jours }}
+          PAYS: ${{ inputs.pays }}
+          ESSAI: ${{ inputs.essai_a_vide }}
+        run: |
+          set -euo pipefail
+          args=(revue --par-pays 10 --a-la-une 10 --format html,md,json --sortie dist)
+
+          # --semaine et --jours s'excluent : la semaine l'emporterait en
+          # silence. On ne pose donc qu'un seul des deux.
+          if [ -n "${JOURS:-}" ] && [ "${JOURS}" != "7" ]; then
+            args+=(--jours "$JOURS")
+          else
+            args+=(--semaine)
+          fi
+
+          if [ -n "${PAYS:-}" ]; then args+=(--pays "$PAYS"); fi
+          if [ -n "${ANTHROPIC_API_KEY:-}" ]; then args+=(--traduction anthropic); fi
+          if [ -n "${DESTINATAIRES:-}" ]; then args+=(--email "$DESTINATAIRES"); fi
+          if [ "${ESSAI:-}" = "true" ]; then args+=(--essai-a-vide); fi
+
+          echo "jewnews ${args[*]}"
+          node bin/jewnews.js "${args[@]}"
+
+      # Les fichiers restent téléchargeables trois mois : c'est l'archive de
+      # la veille, indépendamment de la boîte de réception.
+      - name: Archiver l'édition
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: revue-${{ github.run_number }}
+          path: dist/
+          retention-days: 90
+          if-no-files-found: warn
