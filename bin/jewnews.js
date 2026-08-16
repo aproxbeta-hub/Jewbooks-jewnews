@@ -10,6 +10,9 @@ import process from 'node:process';
 import { genererRevue } from '../src/digest.js';
 import { loadConfig, buildEuropeanFeeds, buildGlobalFeeds, dedupeFeeds, PROFILS } from '../src/sources.js';
 import { collect } from '../src/collect.js';
+import { googleBooksRequetes } from '../src/books.js';
+import { fetchJson } from '../src/fetch.js';
+import { mapPool } from '../src/util/pool.js';
 import { Cache } from '../src/cache.js';
 import { FORMATS, renderEmail } from '../src/render/index.js';
 import { renderSourcesHtml } from '../src/render/sources.js';
@@ -298,6 +301,34 @@ async function commandeSources(options) {
       : (fait, total) => process.stderr.write(`\r  ${fait}/${total}`),
   });
   if (!options.silencieux) process.stderr.write('\r');
+
+  // Google Books n'est pas un flux, mais c'est une source de la collecte :
+  // la passer sous silence ici, c'est laisser la rubrique Parutions se vider
+  // sans explication.
+  if (!options['sans-google-books']) {
+    const requetes = googleBooksRequetes(config);
+    const reponses = await mapPool(requetes, 4, (r) =>
+      fetchJson(r.url, { timeout: nombre(options.delai, 20000), retries: 0 }),
+    );
+    reponses.forEach((reponse, i) => {
+      rapport.push(
+        reponse.ok
+          ? {
+              id: requetes[i].id,
+              nom: requetes[i].nom,
+              statut: 'ok',
+              total: (reponse.value?.items || []).length,
+            }
+          : {
+              id: requetes[i].id,
+              nom: requetes[i].nom,
+              statut: 'echec',
+              erreur: reponse.error?.message || String(reponse.error),
+              total: 0,
+            },
+      );
+    });
+  }
 
   const ok = rapport.filter((l) => l.statut !== 'echec');
   const echecs = rapport.filter((l) => l.statut === 'echec');

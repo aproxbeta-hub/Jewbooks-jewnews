@@ -89,6 +89,38 @@ function versArticle(volume, requete, langue) {
 }
 
 /**
+ * Liste des appels Google Books qui seront effectués, sans les exécuter.
+ * Utilisée par `sources --check` : ces requêtes font partie de la collecte au
+ * même titre que les flux, et doivent donc être vérifiables. Elles ont échoué
+ * trente fois en silence lors de la première édition réelle, ce qui vidait la
+ * rubrique Parutions sans que rien ne le signale.
+ */
+export function googleBooksRequetes(config) {
+  const params = config?.monde?.googleBooks;
+  if (!params || params.actif === false) return [];
+  const cle = process.env.GOOGLE_BOOKS_API_KEY;
+  const sorties = [];
+  for (const requete of params.requetes || []) {
+    for (const langue of params.langues || [null]) {
+      const query = new URLSearchParams({
+        q: requete,
+        orderBy: 'newest',
+        printType: 'books',
+        maxResults: String(Math.min(40, params.maxParRequete || 40)),
+      });
+      if (langue) query.set('langRestrict', langue);
+      if (cle) query.set('key', cle);
+      sorties.push({
+        id: `google-books:${requete}:${langue || 'toutes'}`,
+        nom: `Google Books — ${requete}${langue ? ` (${langue})` : ''}`,
+        url: `${ENDPOINT}?${query.toString()}`,
+      });
+    }
+  }
+  return sorties;
+}
+
+/**
  * Interroge Google Books et renvoie les parutions de la fenêtre.
  * L'API est publique et sans clé ; une clé (GOOGLE_BOOKS_API_KEY) relève
  * seulement les quotas.
