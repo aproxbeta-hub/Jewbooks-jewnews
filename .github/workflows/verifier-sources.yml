@@ -1,0 +1,93 @@
+name: Vérifier les sources
+
+# Interroge chaque flux et dit lequel répond. À lancer après avoir ajouté ou
+# corrigé une source, et quand une rubrique de la revue reste vide.
+#
+# Le travail réussit toujours : un flux mort est une information, pas une
+# panne. Le détail s'affiche dans le récapitulatif du run.
+
+on:
+  workflow_dispatch:
+    inputs:
+      pays:
+        description: 'Codes ISO séparés par des virgules (vide = tous)'
+        type: string
+        default: ''
+      sans_google_news:
+        description: 'Ne tester que les médias et flux déclarés'
+        type: boolean
+        default: false
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Interroger les flux
+        env:
+          PAYS: ${{ inputs.pays }}
+          SANS_GN: ${{ inputs.sans_google_news }}
+        run: |
+          set -uo pipefail
+          args=(sources --check --silencieux)
+          if [ -n "${PAYS:-}" ]; then args+=(--pays "$PAYS"); fi
+          if [ "${SANS_GN:-}" = "true" ]; then args+=(--sans-google-news); fi
+
+          # La commande sort en 1 dès qu'un flux échoue : ici, c'est le
+          # résultat attendu, pas une panne du travail.
+          node bin/jewnews.js "${args[@]}" | tee verification.txt || true
+
+      - name: Récapitulatif
+        if: always()
+        run: |
+          set -uo pipefail
+          total=$(grep -c '^[✓✗·]' verification.txt || echo 0)
+          morts=$(grep -c '^✗' verification.txt || echo 0)
+          vides=$(grep -c '^·' verification.txt || echo 0)
+          {
+            echo "## Vérification des sources"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Flux interrogés | ${total} |"
+            echo "| En échec | ${morts} |"
+            echo "| Joignables mais vides | ${vides} |"
+            echo
+            if [ "${morts}" -gt 0 ]; then
+              echo "### Flux en échec"
+              echo
+              echo 'À corriger dans `sources/europe.json` ou `sources/monde.json`.'
+              echo
+              echo '```'
+              grep '^✗' verification.txt
+              echo '```'
+            fi
+            if [ "${vides}" -gt 0 ]; then
+              echo "### Joignables, mais sans entrée"
+              echo
+              echo 'Le flux répond et ne publie rien : à surveiller, pas forcément à corriger.'
+              echo
+              echo '```'
+              grep '^·' verification.txt
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Archiver le rapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-${{ github.run_number }}
+          path: verification.txt
+          retention-days: 30
+          if-no-files-found: warn
