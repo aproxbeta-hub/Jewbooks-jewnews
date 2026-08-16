@@ -136,7 +136,14 @@ Actions* :
 L'onglet *Actions > Revue hebdomadaire > Run workflow* permet de déclencher un
 numéro à la demande, de restreindre les pays, ou de faire un essai à vide sans
 rien envoyer. Chaque édition est aussi archivée comme *artifact* pendant
-90 jours : la boîte de réception n'est pas la seule copie.
+90 jours — avec le tableau de bord des sources, régénéré à chaque fois : la
+boîte de réception n'est pas la seule copie.
+
+**Tant que `JEWNEWS_EMAIL` n'est pas définie, le travail réussit quand même** :
+la revue est établie et déposée dans l'artifact, avec un avertissement visible
+sur la page du run. Un échec hebdomadaire ne vous apprendrait rien et ne vous
+laisserait rien à lire. Le récapitulatif du run indique dans tous les cas ce
+qui a été envoyé, à qui, et combien de pays ont répondu.
 
 Le cache des traductions est conservé d'une semaine à l'autre par le workflow,
 donc seuls les nouveaux articles sont facturés.

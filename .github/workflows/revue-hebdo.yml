@@ -66,14 +66,10 @@ jobs:
           key: jewnews-cache-${{ github.run_id }}
           restore-keys: jewnews-cache-
 
-      - name: Vérifier que les destinataires sont configurés
-        if: ${{ !inputs.essai_a_vide }}
-        run: |
-          if [ -z "${{ vars.JEWNEWS_EMAIL }}" ]; then
-            echo "::error::La variable JEWNEWS_EMAIL n'est pas définie (Settings > Secrets and variables > Actions > Variables)."
-            exit 1
-          fi
-
+      # La revue est TOUJOURS établie, même sans destinataire configuré : elle
+      # part alors dans l'artifact plutôt que dans une boîte. Faire échouer le
+      # travail avant la collecte ne produirait qu'un échec hebdomadaire et
+      # rien à télécharger.
       - name: Établir et envoyer la revue
         env:
           SMTP_URL: ${{ secrets.SMTP_URL }}
@@ -96,12 +92,28 @@ jobs:
           fi
 
           if [ -n "${PAYS:-}" ]; then args+=(--pays "$PAYS"); fi
-          if [ -n "${ANTHROPIC_API_KEY:-}" ]; then args+=(--traduction anthropic); fi
-          if [ -n "${DESTINATAIRES:-}" ]; then args+=(--email "$DESTINATAIRES"); fi
-          if [ "${ESSAI:-}" = "true" ]; then args+=(--essai-a-vide); fi
+
+          if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+            args+=(--traduction anthropic)
+          else
+            echo "::warning title=Sans traduction::ANTHROPIC_API_KEY n'est pas définie : les titres resteront en langue d'origine."
+          fi
+
+          if [ -n "${DESTINATAIRES:-}" ]; then
+            args+=(--email "$DESTINATAIRES")
+            if [ "${ESSAI:-}" = "true" ]; then args+=(--essai-a-vide); fi
+          else
+            echo "::warning title=Revue non envoyée::JEWNEWS_EMAIL n'est pas définie (Settings > Secrets and variables > Actions > Variables). La revue est produite et déposée dans l'artifact ci-dessous, mais n'est envoyée à personne."
+          fi
 
           echo "jewnews ${args[*]}"
-          node bin/jewnews.js "${args[@]}"
+          node bin/jewnews.js "${args[@]}" 2>&1 | tee jewnews.log
+
+      # Le tableau de bord des sources est régénéré à chaque édition : il suit
+      # ainsi les ajouts faits dans sources/europe.json.
+      - name: Régénérer le tableau de bord des sources
+        if: always()
+        run: node bin/jewnews.js sources --html dist/sources.html
 
       # Les fichiers restent téléchargeables trois mois : c'est l'archive de
       # la veille, indépendamment de la boîte de réception.
@@ -112,4 +124,35 @@ jobs:
           name: revue-${{ github.run_number }}
           path: dist/
           retention-days: 90
+          if-no-files-found: warn
+
+      # Le récapitulatif s'affiche directement sur la page du run : on voit
+      # d'un coup d'œil combien de pays ont répondu, sans ouvrir les journaux.
+      - name: Récapitulatif
+        if: always()
+        env:
+          DESTINATAIRES: ${{ vars.JEWNEWS_EMAIL }}
+        run: |
+          {
+            echo "## Revue du $(date -u '+%d/%m/%Y')"
+            echo
+            if [ -n "${DESTINATAIRES:-}" ]; then
+              echo "Envoyée à \`${DESTINATAIRES}\`."
+            else
+              echo "> **Rien n'a été envoyé.** La variable \`JEWNEWS_EMAIL\` n'est pas définie."
+              echo "> *Settings → Secrets and variables → Actions → Variables → New repository variable*,"
+              echo "> nom \`JEWNEWS_EMAIL\`, valeur votre adresse. L'édition reste téléchargeable"
+              echo "> dans les artifacts de ce run."
+            fi
+            echo
+            if [ -s jewnews.log ]; then
+              echo '<details><summary>Journal de collecte</summary>'
+              echo
+              echo '```'
+              tail -n 25 jewnews.log
+              echo '```'
+              echo
+              echo '</details>'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
           if-no-files-found: warn
