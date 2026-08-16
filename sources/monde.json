@@ -15,7 +15,9 @@
       "url": "https://www.jewishbookcouncil.org/feed",
       "langue": "en",
       "poids": 3,
-      "type": "livre"
+      "type": "livre",
+      "actif": false,
+      "note": "URL introuvable : https://www.jewishbookcouncil.org/rss.xml et https://www.jewishbookcouncil.org/feed renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
     },
     {
       "id": "jrb",
@@ -108,7 +110,9 @@
       "url": "https://feeds.megaphone.fm/israelstory",
       "langue": "en",
       "poids": 2,
-      "type": "podcast"
+      "type": "podcast",
+      "actif": false,
+      "note": "URL introuvable : https://feeds.simplecast.com/israelstory et https://feeds.megaphone.fm/israelstory renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
     },
     {
       "id": "jewish-currents",
@@ -116,7 +120,9 @@
       "url": "https://jewishcurrents.org/feed",
       "langue": "en",
       "poids": 2,
-      "type": "podcast"
+      "type": "podcast",
+      "actif": false,
+      "note": "URL introuvable : https://feeds.acast.com/public/shows/on-the-nose et https://jewishcurrents.org/feed renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
     },
     {
       "id": "identity-crisis",
@@ -124,7 +130,9 @@
       "url": "https://identitycrisis.simplecast.com/rss",
       "langue": "en",
       "poids": 1.5,
-      "type": "podcast"
+      "type": "podcast",
+      "actif": false,
+      "note": "URL introuvable : https://feeds.simplecast.com/6vwG1SlZ et https://identitycrisis.simplecast.com/rss renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
     },
     {
       "id": "akadem-podcast",

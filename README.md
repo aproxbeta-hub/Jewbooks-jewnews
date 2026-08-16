@@ -240,8 +240,14 @@ par sujet et triée par nouveauté (`subject:"Jewish"`, `subject:"Yiddish"`…).
 
 Google Books date souvent au mois ou à l'année près. Les dates au mois sont
 retenues et **signalées comme approximatives** ; celles à l'année sont
-écartées, faute d'être une actualité de la semaine. Une clé
-`GOOGLE_BOOKS_API_KEY` n'est pas nécessaire, elle relève seulement les quotas.
+écartées, faute d'être une actualité de la semaine.
+
+**Une clé `GOOGLE_BOOKS_API_KEY` est nécessaire en intégration continue.** Le
+quota anonyme de l'API se calcule par adresse IP ; celle d'un runner GitHub
+est partagée avec le monde entier et déjà épuisée, si bien que les trente
+requêtes reviennent en HTTP 429. C'est ce qui a vidé la rubrique Parutions du
+premier numéro. La clé est gratuite (console Google Cloud → API Books) et se
+pose en secret du dépôt. En local, sans clé, ça passe généralement.
 
 ## Personnalisation
 
@@ -261,12 +267,17 @@ langue déclarée et que chaque langue fournit les quatre groupes.
 
 ## Limites connues, à lire avant la première édition
 
-- **Les URLs de flux communautaires n'ont pas pu être vérifiées** depuis
-  l'environnement de développement, dont la politique réseau bloque les
-  domaines de presse. Elles sont données de bonne foi. **Lancez
-  `jewnews sources --check` avant la première édition** et corrigez ce qui
-  répond en erreur ; les sources en échec figurent de toute façon dans les
-  notes de collecte de chaque numéro.
+- **Seize flux communautaires sur trente-quatre ne répondent pas** (vérifié le
+  16 août 2026, workflow « Vérifier les sources »). Six refusent les clients
+  automatiques ou ne servent pas de flux ; dix sont introuvables, et deux
+  adresses ont été essayées pour chacun sans succès. Tous sont désactivés avec
+  le motif en commentaire dans `sources/europe.json` et `sources/monde.json`.
+  Deviner ces adresses à l'aveugle ne marche pas : il faut l'adresse exacte,
+  que la rédaction obtiendra plus vite que n'importe quelle heuristique.
+  Ce qui répond, en revanche, répond bien : K., Tribune Juive, JForum,
+  Alliance, Jüdische Allgemeine, Belltower, Jewish News UK, Pagine Ebraiche,
+  Shalom, Chidusz, Szombat, NIW, Jonet, Joods Actueel, Lechaim, Jewish Review
+  of Books, Forward Culture, JTA, Unorthodox et le mahj.
 - **Les liens Google News sont des redirections.** Ils fonctionnent dans un
   navigateur, mais le dédoublonnage préfère systématiquement un lien direct
   quand un média communautaire couvre le même sujet.

@@ -61,14 +61,18 @@
           "nom": "CRIF",
           "url": "https://www.crif.org/rss.xml",
           "langue": "fr",
-          "poids": 2
+          "poids": 2,
+          "actif": false,
+          "note": "URL introuvable : https://www.crif.org/fr/rss.xml et https://www.crif.org/rss.xml renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
         },
         {
           "id": "fr-lmj",
           "nom": "Le Monde Juif .info",
           "url": "https://lemondejuif.info/rss",
           "langue": "fr",
-          "poids": 1.5
+          "poids": 1.5,
+          "actif": false,
+          "note": "URL introuvable : https://lemondejuif.info/feed/ et https://lemondejuif.info/rss renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
         },
         {
           "id": "fr-akadem",
@@ -114,7 +118,9 @@
           "url": "https://www.jmberlin.de/rss.xml",
           "langue": "de",
           "poids": 1.5,
-          "type": "evenement"
+          "type": "evenement",
+          "actif": false,
+          "note": "URL introuvable : https://www.jmberlin.de/blog/feed et https://www.jmberlin.de/rss.xml renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
         }
       ]
     },
@@ -137,7 +143,9 @@
           "nom": "The Jewish Chronicle",
           "url": "https://www.thejc.com/rss.xml",
           "langue": "en",
-          "poids": 2.5
+          "poids": 2.5,
+          "actif": false,
+          "note": "URL introuvable : https://www.thejc.com/feed et https://www.thejc.com/rss.xml renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
         },
         {
           "id": "gb-jewishnews",
@@ -397,7 +405,9 @@
           "nom": "Conseil central des communautés juives de Grèce",
           "url": "https://www.kis.gr/feed",
           "langue": "el",
-          "poids": 2
+          "poids": 2,
+          "actif": false,
+          "note": "URL introuvable : https://kis.gr/feed/ et https://www.kis.gr/feed renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
         }
       ]
     },
@@ -420,7 +430,9 @@
           "nom": "Şalom",
           "url": "https://www.salom.com.tr/rss.xml",
           "langue": "tr",
-          "poids": 2.5
+          "poids": 2.5,
+          "actif": false,
+          "note": "URL introuvable : https://www.salom.com.tr/rss et https://www.salom.com.tr/rss.xml renvoient 404 (vérifié le 16/08/2026). Renseignez l'adresse exacte, puis remettez actif à true."
         }
       ]
     },

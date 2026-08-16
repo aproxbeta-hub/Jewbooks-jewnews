@@ -122,10 +122,13 @@ export function googleBooksRequetes(config) {
 
 /**
  * Interroge Google Books et renvoie les parutions de la fenêtre.
- * L'API est publique et sans clé ; une clé (GOOGLE_BOOKS_API_KEY) relève
- * seulement les quotas.
+ * L'API est publique, mais son quota anonyme est calculé par adresse IP.
+ * Depuis un runner d'intégration continue, l'adresse est partagée avec le
+ * monde entier et le quota est déjà épuisé : les trente requêtes reviennent
+ * en HTTP 429. Une clé GOOGLE_BOOKS_API_KEY — gratuite, depuis la console
+ * Google Cloud — est donc nécessaire en pratique, et facultative en local.
  */
-export async function collectBooks(config, { window: fenetre, concurrency = 4, timeout = 20000 } = {}) {
+export async function collectBooks(config, { window: fenetre, concurrency = 1, timeout = 20000 } = {}) {
   const params = config?.monde?.googleBooks;
   if (!params || params.actif === false) return { livres: [], rapport: [] };
 
@@ -147,7 +150,10 @@ export async function collectBooks(config, { window: fenetre, concurrency = 4, t
     if (langue) query.set('langRestrict', langue);
     if (cle) query.set('key', cle);
 
-    const reponse = await fetchJson(`${ENDPOINT}?${query.toString()}`, { timeout, retries: 1 });
+    // Sans clé, l'API plafonne par adresse IP. Depuis une intégration continue,
+    // dont les adresses sont partagées par tout GitHub, le 429 est la règle et
+    // non l'exception : on sérialise (concurrency 1) et on réessaie avec repli.
+    const reponse = await fetchJson(`${ENDPOINT}?${query.toString()}`, { timeout, retries: 3 });
     const volumes = reponse?.items || [];
     const retenus = volumes
       .map((volume) => versArticle(volume, requete, langue))
