@@ -11,3 +11,4 @@ export { Cache } from './cache.js';
 export { renderHtml, renderMarkdown, renderJson, renderEmail, FORMATS } from './render/index.js';
 export { envoyerRevue, creerTransport, transportMemoire, parseDestinataires } from './mail.js';
 export { resolveWindow, jewishWeek } from './util/dates.js';
+export * as tfc from './tfc/index.js';

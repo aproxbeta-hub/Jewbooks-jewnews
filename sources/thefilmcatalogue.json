@@ -1,0 +1,14 @@
+{
+  "nom": "The Film Catalogue",
+  "racine": "https://www.thefilmcatalogue.com",
+  "departs": ["/companies", "/company", "/sales-agents"],
+  "motifFiche": "^/(?:companies|company|sales-agents)/[^/?#]+/?$",
+  "motifListe": "^/(?:companies|company|sales-agents)/?$",
+  "parametrePage": "page",
+  "premierePage": 1,
+  "maxPages": 400,
+  "suffixesTitre": ["The Film Catalogue", "Film Catalogue", "TFC"],
+  "delaiMs": 1200,
+  "concurrence": 2,
+  "respecterRobots": true
+}

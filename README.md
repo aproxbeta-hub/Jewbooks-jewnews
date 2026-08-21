@@ -18,6 +18,10 @@ dimanches matin**.
 jewnews revue --semaine --traduction anthropic --email moi@exemple.fr
 ```
 
+Le dépôt porte aussi un second exécutable, `tfc`, sans rapport avec la revue :
+il collecte les sociétés et leurs courriels sur un annuaire professionnel de
+films. Voir [`tfc`](#tfc--annuaire-de-sociétés--raison-sociale-et-courriel).
+
 ---
 
 ## Installation
@@ -292,15 +296,101 @@ langue déclarée et que chaque langue fournit les quatre groupes.
   titre, chapô, éditeur, date et lien. La traduction porte sur ces seuls
   éléments.
 
+## `tfc` — annuaire de sociétés : raison sociale et courriel
+
+Un second exécutable, indépendant de la revue de presse, parcourt un annuaire
+professionnel de films et en tire ce qu'il faut pour un fichier de prospection :
+le nom de la société et son adresse de courriel. Cible par défaut :
+[thefilmcatalogue.com](https://www.thefilmcatalogue.com).
+
+```bash
+# Les cinquante premières fiches, à l'écran
+node bin/tfc.js societes --limite 50 --format texte --stdout
+
+# Un CSV prêt pour Excel en français, sociétés pourvues d'un courriel seulement
+node bin/tfc.js societes --avec-email --separateur ';' --bom --sortie dist
+
+# Ce que le scraper voit sur une fiche donnée, stratégie par stratégie
+node bin/tfc.js diagnostic https://www.thefilmcatalogue.com/companies/exemple
+
+# Des pages enregistrées depuis le navigateur, relues hors ligne
+node bin/tfc.js fichiers pages/ --format csv --stdout
+```
+
+`node bin/tfc.js aide` détaille les options. Les colonnes du CSV sont `nom`,
+`email`, `contact`, `pays`, `site_web`, `telephone`, `fiche` et
+`emails_secondaires`.
+
+### Écrit sans avoir pu voir le site
+
+L'environnement de développement n'avait pas accès à `thefilmcatalogue.com` :
+aucune page réelle n'a pu être consultée. Le scraper est donc construit pour
+que cela se corrige en une fois, sans réécriture.
+
+- **Trois voies de découverte.** Le plan du site (`sitemap.xml`, index compris)
+  d'abord, parce qu'il ne dépend d'aucun balisage ; le parcours des pages de
+  liste ensuite, si le plan est muet ; des URL imposées avec `--url` enfin.
+- **Une pile de stratégies par champ.** Pour le nom : JSON-LD, JSON embarqué
+  (`__NEXT_DATA__`, `window.__NUXT__`), `og:title`, `<h1>`, `<title>`. Pour le
+  courriel : `mailto:`, obfuscation Cloudflare (`data-cfemail` et
+  `/cdn-cgi/l/email-protection`), JSON-LD, JSON embarqué, entités numériques,
+  puis les écritures en toutes lettres (`nom [at] societe (dot) com`). La
+  première qui aboutit gagne, et l'on retient laquelle.
+- **Une configuration externalisée.** `sources/thefilmcatalogue.json` porte la
+  racine, les chemins de départ, les motifs d'URL, les étiquettes de champs et
+  les domaines exclus. `--config mon-site.json` remplace le tout : viser un
+  autre annuaire ne demande pas de toucher au code.
+
+La marche à suivre, le jour où le site est joignable :
+
+```bash
+node bin/tfc.js diagnostic <url d'une fiche>   # ce que chaque stratégie trouve
+$EDITOR sources/thefilmcatalogue.json          # corriger motifs et étiquettes
+node bin/tfc.js societes --limite 5 --format texte --stdout
+```
+
+Le rapport de diagnostic dit quels signaux la page contient réellement
+(nombre de blocs JSON-LD, présence d'un `<h1>`, liens `mailto:`, adresses
+trouvées et par quel chemin). C'est de sa lecture que sortent les deux ou trois
+lignes de configuration à corriger.
+
+### Politesse
+
+Le collecteur lit `robots.txt` et s'y tient — chemins interdits et
+`Crawl-delay` compris, ce dernier l'emportant sur `--delai` s'il est plus
+long. Par défaut : deux requêtes simultanées au plus, 1,2 seconde entre deux
+départs, cache disque avec requêtes conditionnelles (`ETag`,
+`If-Modified-Since`) pour ne pas retélécharger une fiche inchangée.
+`--sans-robots` existe pour les sites dont on a l'autorisation explicite ;
+c'est le seul cas où l'employer.
+
+Les adresses collectées sont des coordonnées professionnelles publiées par les
+sociétés elles-mêmes dans un annuaire de marché. Elles relèvent, à
+l'utilisation, des règles applicables à la prospection entre professionnels :
+objet en rapport avec l'activité du destinataire, identification de
+l'expéditeur, retrait sur simple demande.
+
+### Si le réseau passe par un mandataire
+
+`fetch` de Node n'honore `HTTPS_PROXY` que si on le lui dit :
+
+```bash
+NODE_USE_ENV_PROXY=1 node bin/tfc.js societes --limite 5
+```
+
+Sans accès au site, la commande s'arrête proprement, énumère les URL en échec
+et rend un code de sortie non nul.
+
 ## Tests
 
 ```bash
 npm test
 ```
 
-126 tests, sans accès réseau : le réseau est simulé par des fixtures, y compris
-pour la génération de bout en bout d'une revue complète et pour l'expédition du
-message (transport en mémoire).
+190 tests, sans accès réseau : le réseau est simulé par des fixtures, y compris
+pour la génération de bout en bout d'une revue complète, pour l'expédition du
+message (transport en mémoire) et pour le parcours complet d'un annuaire
+factice par `tfc` (robots.txt, plan du site, pagination, fiches).
 
 ## Licence
 
